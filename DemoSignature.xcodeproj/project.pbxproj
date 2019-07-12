@@ -23,6 +23,7 @@
 		FE6C4E3F22D5C62F00C8F2B1 /* DynamicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6C4E3E22D5C62F00C8F2B1 /* DynamicViewController.swift */; };
 		FE6C4E4122D5DA0900C8F2B1 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6C4E4022D5DA0900C8F2B1 /* PageViewController.swift */; };
 		FE6C4E4322D6E23B00C8F2B1 /* CustomSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6C4E4222D6E23B00C8F2B1 /* CustomSwitchCell.swift */; };
+		FE6C4E4522D8804D00C8F2B1 /* MoveTogether.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6C4E4422D8804D00C8F2B1 /* MoveTogether.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +66,7 @@
 		FE6C4E3E22D5C62F00C8F2B1 /* DynamicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicViewController.swift; sourceTree = "<group>"; };
 		FE6C4E4022D5DA0900C8F2B1 /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
 		FE6C4E4222D6E23B00C8F2B1 /* CustomSwitchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSwitchCell.swift; sourceTree = "<group>"; };
+		FE6C4E4422D8804D00C8F2B1 /* MoveTogether.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveTogether.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +132,7 @@
 				FE6C4E3E22D5C62F00C8F2B1 /* DynamicViewController.swift */,
 				FE6C4E4022D5DA0900C8F2B1 /* PageViewController.swift */,
 				FE6C4E4222D6E23B00C8F2B1 /* CustomSwitchCell.swift */,
+				FE6C4E4422D8804D00C8F2B1 /* MoveTogether.swift */,
 			);
 			path = DemoSignature;
 			sourceTree = "<group>";
@@ -294,6 +297,7 @@
 				FE6C4E3F22D5C62F00C8F2B1 /* DynamicViewController.swift in Sources */,
 				FE6C4E0522D3272300C8F2B1 /* AppDelegate.swift in Sources */,
 				FE6C4E3522D432BC00C8F2B1 /* Extension+UIImage.swift in Sources */,
+				FE6C4E4522D8804D00C8F2B1 /* MoveTogether.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

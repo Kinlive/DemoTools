@@ -7,13 +7,11 @@
 //
 
 import UIKit
-import ARKit
 
 class TestCell: UITableViewCell {
     
     @IBOutlet weak var numberLabel: UILabel!
     
-    var sceneView: ARSCNView!
 }
 
 protocol PageCellDelegate: class {
@@ -27,6 +25,8 @@ class PageCell: UICollectionViewCell, UITableViewDelegate, UITableViewDataSource
     @IBOutlet weak var tableView: UITableView!
     
     var previousOffsetY: CGFloat = .zero
+    
+    var moveManager = MoveTogether.instance
     
     var data: [String] = [] {
         didSet {
@@ -83,11 +83,8 @@ class PageCell: UICollectionViewCell, UITableViewDelegate, UITableViewDataSource
     func configueSet(with datas: [String]) {
         tableView.delegate = self
         tableView.dataSource = self
-//        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-//        tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         tableView.rowHeight = 80
         self.data = datas
-        
     }
     
     // table view delegate
@@ -126,6 +123,13 @@ class PageCell: UICollectionViewCell, UITableViewDelegate, UITableViewDataSource
         
         guard let cell = tableView.cellForRow(at: indexPath) as? TestCell else { return }
         
+        moveManager.whenScrolling(target: cell.numberLabel,
+                                  parent: cell,
+                                  scrolling: scrollView,
+                                  targetActualHeight: cell.numberLabel.font.lineHeight,
+                                  needPassValue: .text(cell.numberLabel.text ?? ""))
+        
+        /*
         // need params: target, targetparent, scrollview, target's actual height,
         let cellHeight: CGFloat = cell.frame.height
         let targetAny: String = cell.numberLabel.text ?? ""
@@ -155,6 +159,7 @@ class PageCell: UICollectionViewCell, UITableViewDelegate, UITableViewDataSource
         }
         
         previousOffsetY = scrollView.contentOffset.y
+        */
     }
     
 }
@@ -218,7 +223,8 @@ extension PageViewController: UICollectionViewDataSource, UICollectionViewDelega
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PageCell", for: indexPath) as? PageCell else { return PageCell() }
         //        cell.titleLabel.text = "Page\(indexPath.row + 1)";
-        cell.delegate = self
+//        cell.delegate = self
+        cell.moveManager.delegate = self
         let data = datas[indexPath.row]
         cell.configueSet(with: data)
         return cell
@@ -262,7 +268,7 @@ extension PageViewController: UICollectionViewDataSource, UICollectionViewDelega
     }
     
 }
-
+/*
 extension PageViewController: PageCellDelegate {
     func onDirectScrollToTop(_ moveScale: CGFloat, and text: String) {
          moveLabel.text = text
@@ -288,4 +294,33 @@ extension PageViewController: PageCellDelegate {
     func whenTextWillLeft() {
         
     }
+}
+*/
+
+extension PageViewController: MoveTogetherDelegate {
+ 
+    func onDirectScrollToBottom(_ moveScale: CGFloat, and moveSoming: MoveType) {
+        let moveDistance = (topBaseView.frame.height * 0.5 + moveLabel.frame.height) * (1 - moveScale)
+        
+        let labelAlpha: CGFloat = moveScale < 0.3 ? 0.3 : moveScale
+        
+        guard case .text(let text) = moveSoming else { return }
+        moveLabel.text = text
+        DispatchQueue.main.async {
+            self.moveLabel.transform = CGAffineTransform(translationX: 0, y: moveDistance)
+            self.moveLabel.alpha = labelAlpha
+        }
+    }
+    
+    func onDirectScrollToTop(_ moveScale: CGFloat, and moveSoming: MoveType) {
+        guard case .text(let text) = moveSoming else { return }
+        moveLabel.text = text
+        
+        let moveDistance = (topBaseView.frame.height * 0.5 + moveLabel.frame.height) * ( 1 - moveScale)
+        DispatchQueue.main.async {
+            self.moveLabel.transform = CGAffineTransform(translationX: 0, y: moveDistance)
+        }
+    }
+    
+    
 }
