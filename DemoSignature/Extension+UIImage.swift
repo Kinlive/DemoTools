@@ -127,4 +127,30 @@ extension UIImage {
         return image
     }
     
+    // new calculate size from stack overflow /questions/7645454 ======================================================================
+    static func scaledToSize(size: CGSize, withImage image: UIImage) -> UIImage? {
+        if UIScreen.main.responds(to: #selector(getter: UIScreen.scale)) {
+            UIGraphicsBeginImageContextWithOptions(size, false, UIScreen.main.scale)
+        } else {
+            UIGraphicsBeginImageContext(size)
+        }
+        
+        image.draw(in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage
+    }
+    
+    static func scaledToMaxWidth(_ width: CGFloat, maxHeight height: CGFloat, withImage image: UIImage) -> UIImage? {
+        let oldWidth = image.size.width
+        let oldHeight = image.size.height
+        let scaleFactor = oldWidth > oldHeight ? width / oldWidth : height / oldHeight
+    
+        let newHeight = oldHeight * scaleFactor
+        let newWidth = oldWidth * scaleFactor
+        let newSize = CGSize(width: newWidth, height: newHeight)
+        
+        return UIImage.scaledToSize(size: newSize, withImage: image)
+    }
+    
 }
