@@ -14,7 +14,16 @@ class RequestCommunicator<requestBaseTypeT: RequestBaseType>: NSObject, URLSessi
     
     var downloadCompletionBlock: ((_ data: Data) -> Void)?
     
-
+     /** Only use this function for request.
+     
+    Steps:
+        first: define new enum and implement with `RequestBaseType`.
+        second: initialize communicator with generic type for define's enum.
+        third: use communicator instance to request and pass needs params.
+    
+    - Parameter type: An enum type with generic type.
+    - Parameter completionHandler: result with .success(CommunicatorResponse) or .failure(CommunicatorResponse).
+    */
     public func request(type: requestBaseTypeT, completionHandler: @escaping RequestCompletionHandler) {
         
         // 選擇request 方式
@@ -46,7 +55,6 @@ class RequestCommunicator<requestBaseTypeT: RequestBaseType>: NSObject, URLSessi
         }
         
     }
-  
     
     // ================request functions=====================
     /// normal request with callback
@@ -68,7 +76,7 @@ class RequestCommunicator<requestBaseTypeT: RequestBaseType>: NSObject, URLSessi
         task.resume()
     }
     
-    /// query parameters
+    // MARK: - reqeust with query string of parameters.
     private func requestWithURL(_ target: requestBaseTypeT, parameters: [String: Any], completion: @escaping RequestCompletionHandler) {
         let url = URL(target: target)
         
@@ -93,7 +101,7 @@ class RequestCommunicator<requestBaseTypeT: RequestBaseType>: NSObject, URLSessi
         fetchedDataByDataTask(from: request, target: target, completion: completion)
     }
     
-    // json body
+    // MARK: - request with json body ==============================================================
     private func requestWithJSONBody(target: requestBaseTypeT, parameters: [String: Any], completion: @escaping RequestCompletionHandler) {
         
         let url = URL(target: target)
@@ -119,13 +127,15 @@ class RequestCommunicator<requestBaseTypeT: RequestBaseType>: NSObject, URLSessi
         fetchedDataByDataTask(from: request, target: target, completion: completion)
     }
     
-    // contentType: form-urlencoded
+    // MARK: - contentType: form-urlencoded ==========================================================
     private func requestWithUrlencodedBody(_ target: requestBaseTypeT, parameters: [String: Any], completion: @escaping RequestCompletionHandler) {
         
         guard let params = parameters as? [String: String] else { return }
         
         let url = URL(target: target)
         var request = URLRequest(url: url)
+        request.httpMethod = target.method.rawValue
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         
         request.encodeParameters(parameters: params)
         
@@ -133,8 +143,8 @@ class RequestCommunicator<requestBaseTypeT: RequestBaseType>: NSObject, URLSessi
         
     }
     
-    // FIXME: - headers
-    func requestWithFormData(_ target: requestBaseTypeT, parameters: [String: Any], mimeType: MimeTypes, completion: @escaping RequestCompletionHandler) {
+    // MARK: - request with multipart formdata ==========================================================
+    private func requestWithFormData(_ target: requestBaseTypeT, parameters: [String: Any], mimeType: MimeTypes, completion: @escaping RequestCompletionHandler) {
         
         let url = URL(target: target)
         var request = URLRequest(url: url)
@@ -155,9 +165,10 @@ class RequestCommunicator<requestBaseTypeT: RequestBaseType>: NSObject, URLSessi
     }
  
     
-    func createBody(parameters: [String: Any], boundary: String, mimeType: MimeTypes) -> Data {
+    // MARK: - helperful ============================================================
+    private func createBody(parameters: [String: Any], boundary: String, mimeType: MimeTypes) -> Data {
         // FIXME: - Log use
-//        var logString: String = "--\(boundary)\r\n"
+        //var logString: String = "--\(boundary)\r\n"
         
         var body = Data()
         let boundaryPrefix = "--\(boundary)\r\n"
@@ -286,10 +297,8 @@ extension URLRequest {
             let (key, value) = arg
             return "\(key)=\(self.percentEscapeString(value))"
         }
-        
         httpBody = parameterArray.joined(separator: "&").data(using: String.Encoding.utf8)
-        httpMethod = "POST"
-        setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        
     }
     
     private func percentEscapeString(_ string: String) -> String {
