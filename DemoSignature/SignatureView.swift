@@ -53,6 +53,7 @@ class SignatureGestureRecognizer: UIGestureRecognizer {
         
         return false
     }
+    
 }
 
 let pointMinDistance: CGFloat = 5
@@ -240,6 +241,19 @@ class SignatureView: UIView {
     
 }
 
+/*
+extension SignatureView: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        if (touch.view?.isKind(of: SignatureView.self))! {
+            return true
+        }
+        return false
+    }
+ 
+    // ============= OR ===============
+    return touch.view == gestureRecognizer.view
+}
+*/
 
 // MARK: - SignatureGestureRecognizer Delegate
 extension SignatureView: SignatureGestureRecognizerDelegate {
