@@ -8,11 +8,13 @@
 
 import Foundation
 
-class RequestCommunicator<requestBaseTypeT: RequestBaseType>: NSObject, URLSessionDownloadDelegate {
+class RequestCommunicator<requestBaseTypeT: RequestBaseType>: NSObject {
 
     typealias RequestCompletionHandler = (Result<CommunicatorResponse, NetworkError>) -> Void
     
-    var downloadCompletionBlock: ((_ data: Data) -> Void)?
+    // Download task use properties
+    var activeDownloads: [URL: Download<DownloadModelProtocol>] = [:]
+    var downloadSession: URLSession!
     
      /** Only use this function for request.
      
@@ -52,6 +54,8 @@ class RequestCommunicator<requestBaseTypeT: RequestBaseType>: NSObject, URLSessi
         case .requestmultipartFormdata(let params, let mimeType):
             requestWithFormData(type, parameters: params, mimeType: mimeType, completion: completionHandler)
             
+        case .requestDownloadTask(let download, let delegateTarget):
+            downloadTask(download: download, delegateTarget: delegateTarget, completion: completionHandler)
         }
         
     }
@@ -71,7 +75,9 @@ class RequestCommunicator<requestBaseTypeT: RequestBaseType>: NSObject, URLSessi
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             
             let result = self.convertToResult(response: response as? HTTPURLResponse, data: data, error: error)
-             completion(result)
+            DispatchQueue.main.async {
+                completion(result)
+            }
         }
         task.resume()
     }
@@ -218,24 +224,6 @@ class RequestCommunicator<requestBaseTypeT: RequestBaseType>: NSObject, URLSessi
         return body
     }
     
-    /*
-    func downloadByDownloadTask(urlString: String, completion: @escaping (Data) -> Void){
-        let url = URL(string: urlString)!
-        let request = URLRequest(url: url)
-        
-        let configiguration = URLSessionConfiguration.default
-        configiguration.timeoutIntervalForRequest = .infinity
-        
-        let urlSession = URLSession(configuration: configiguration, delegate: self, delegateQueue: OperationQueue.main)
-        
-        let task = urlSession.downloadTask(with: request)
-        
-        downloadCompletionBlock = completion
-        
-        task.resume()
-    }
-    */
-    
     // handle response
     private func convertToResult(response: HTTPURLResponse?, data: Data?, error: Error?) -> Result<CommunicatorResponse, NetworkError> {
         
@@ -272,22 +260,56 @@ class RequestCommunicator<requestBaseTypeT: RequestBaseType>: NSObject, URLSessi
         
     }
 
-    // MARK: - URLSessionDownload delegate =====================================
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
-        let data = try! Data(contentsOf: location)
-        if let block = downloadCompletionBlock {
-            block(data)
+}
+
+// MARK: - Download task actions
+extension RequestCommunicator {
+    
+    private func downloadTask(download: Download<DownloadModelProtocol>, delegateTarget: URLSessionDelegate, completion: RequestCompletionHandler?) {
+        
+        let configiguration = URLSessionConfiguration.default
+        
+        downloadSession = URLSession(configuration: configiguration, delegate: delegateTarget, delegateQueue: .main)
+ 
+        download.task = downloadSession.downloadTask(with: download.model.url)
+        
+        // downloadCompletionBlock = completion
+        
+        download.task!.resume()
+        download.isDownloading = true
+        
+        // save current downloads
+        activeDownloads[download.model.url] = download
+    }
+    
+    func pauseDownload(_ target: DownloadModelProtocol) {
+        guard let download = activeDownloads[target.url] else { return }
+        if download.isDownloading {
+            download.task?.cancel(byProducingResumeData: { data in
+                download.resumeData = data
+            })
+            download.isDownloading = false
         }
     }
     
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
-        
-        let progress = Float(totalBytesWritten) / Float(totalBytesExpectedToWrite)
-        print(progress)
+    func cancelDownload(_ target: DownloadModelProtocol) {
+        if let download = activeDownloads[target.url] {
+            download.task?.cancel()
+            activeDownloads[target.url] = nil
+        }
     }
     
+    func resumeDownload(_ target: DownloadModelProtocol) {
+        guard let download = activeDownloads[target.url] else { return }
+        if let resumeData = download.resumeData {
+            download.task = downloadSession.downloadTask(withResumeData: resumeData)
+        } else {
+            download.task = downloadSession.downloadTask(with: target.url)
+        }
+        download.task!.resume()
+        download.isDownloading = true
+    }
 }
-
 
 extension URLRequest {
  
@@ -311,7 +333,6 @@ extension URLRequest {
             .replacingOccurrences(of: " ", with: "+", options: [], range: nil)
     }
 }
-
 
 // URL extension
 public extension URL {

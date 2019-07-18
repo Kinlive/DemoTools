@@ -20,4 +20,6 @@ public enum RequestTasks {
     case requestURLEncodedBody(parameters: [String: Any])
     
     case requestmultipartFormdata(parameters: [String : Any], mimeType: MimeTypes)
+    
+    case requestDownloadTask(download: Download<DownloadModelProtocol>, delegateTarget: URLSessionDelegate)
 }
