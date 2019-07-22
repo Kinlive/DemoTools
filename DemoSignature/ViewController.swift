@@ -12,6 +12,9 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var signatureImageView: UIImageView!
     
+    
+    let uploader = StreamsHandler()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -22,7 +25,8 @@ class ViewController: UIViewController {
     
     /// example for signature
     @IBAction func onSignClearClicked(_ sender: UIButton) {
-//        signatureView.clear()
+        uploader.uploadData()
+       
     }
     
     @IBAction func onSignClicked(_ sender: UIButton) {

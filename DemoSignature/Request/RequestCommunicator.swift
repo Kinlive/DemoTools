@@ -80,6 +80,7 @@ class RequestCommunicator<requestBaseTypeT: RequestBaseType>: NSObject {
             }
         }
         task.resume()
+        
     }
     
     // MARK: - reqeust with query string of parameters.

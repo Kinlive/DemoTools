@@ -39,6 +39,7 @@
 		FE6C4E8822E001FA00C8F2B1 /* DownloadMusic.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6C4E8722E001FA00C8F2B1 /* DownloadMusic.swift */; };
 		FE6C4E8B22E01B5D00C8F2B1 /* StoryboardSupports.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6C4E8A22E01B5D00C8F2B1 /* StoryboardSupports.swift */; };
 		FE6C4E8E22E075C000C8F2B1 /* DetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6C4E8D22E075C000C8F2B1 /* DetailCell.swift */; };
+		FE6C4E9122E162E400C8F2B1 /* Streams.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6C4E9022E162E400C8F2B1 /* Streams.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,6 +98,8 @@
 		FE6C4E8722E001FA00C8F2B1 /* DownloadMusic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadMusic.swift; sourceTree = "<group>"; };
 		FE6C4E8A22E01B5D00C8F2B1 /* StoryboardSupports.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryboardSupports.swift; sourceTree = "<group>"; };
 		FE6C4E8D22E075C000C8F2B1 /* DetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCell.swift; sourceTree = "<group>"; };
+		FE6C4E9022E162E400C8F2B1 /* Streams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Streams.swift; sourceTree = "<group>"; };
+		FE7082E922E1AF2C0018190B /* DemoSignature.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DemoSignature.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,17 +158,12 @@
 		FE6C4E0322D3272300C8F2B1 /* DemoSignature */ = {
 			isa = PBXGroup;
 			children = (
+				FE7082E922E1AF2C0018190B /* DemoSignature.entitlements */,
 				FE6C4E8C22E0758800C8F2B1 /* MusicDownloadTable */,
-				FE6C4E8922E01B3F00C8F2B1 /* Support files */,
 				FE6C4E5422DDBCDA00C8F2B1 /* DemoService */,
 				FE6C4E4922DC2D2400C8F2B1 /* Views */,
 				FE6C4E4622DC2B2200C8F2B1 /* Request */,
-				FE6C4E0422D3272300C8F2B1 /* AppDelegate.swift */,
 				FE6C4E0622D3272300C8F2B1 /* ViewController.swift */,
-				FE6C4E0822D3272300C8F2B1 /* Main.storyboard */,
-				FE6C4E0B22D3272500C8F2B1 /* Assets.xcassets */,
-				FE6C4E0D22D3272500C8F2B1 /* LaunchScreen.storyboard */,
-				FE6C4E1022D3272500C8F2B1 /* Info.plist */,
 				FE6C4E3222D327ED00C8F2B1 /* SignatureView.swift */,
 				FE6C4E3422D432BC00C8F2B1 /* Extension+UIImage.swift */,
 				FE6C4E3622D43F3300C8F2B1 /* SnapshotViewController.swift */,
@@ -176,6 +174,7 @@
 				FE6C4E4222D6E23B00C8F2B1 /* CustomSwitchCell.swift */,
 				FE6C4E4422D8804D00C8F2B1 /* MoveTogether.swift */,
 				FE6C4E4722DC2B4900C8F2B1 /* TestCallApiViewController.swift */,
+				FE6C4E8922E01B3F00C8F2B1 /* Support files */,
 			);
 			path = DemoSignature;
 			sourceTree = "<group>";
@@ -201,6 +200,7 @@
 		FE6C4E4622DC2B2200C8F2B1 /* Request */ = {
 			isa = PBXGroup;
 			children = (
+				FE6C4E8F22E162D300C8F2B1 /* Upload */,
 				FE6C4E8622E0010300C8F2B1 /* Download */,
 				FE6C4E4C22DC570A00C8F2B1 /* RequestCommunicator.swift */,
 				FE6C4E4E22DC7B2E00C8F2B1 /* RequestBaseType.swift */,
@@ -241,6 +241,11 @@
 		FE6C4E8922E01B3F00C8F2B1 /* Support files */ = {
 			isa = PBXGroup;
 			children = (
+				FE6C4E1022D3272500C8F2B1 /* Info.plist */,
+				FE6C4E0822D3272300C8F2B1 /* Main.storyboard */,
+				FE6C4E0D22D3272500C8F2B1 /* LaunchScreen.storyboard */,
+				FE6C4E0B22D3272500C8F2B1 /* Assets.xcassets */,
+				FE6C4E0422D3272300C8F2B1 /* AppDelegate.swift */,
 				FE6C4E8A22E01B5D00C8F2B1 /* StoryboardSupports.swift */,
 			);
 			path = "Support files";
@@ -254,6 +259,14 @@
 				FE6C4E8D22E075C000C8F2B1 /* DetailCell.swift */,
 			);
 			path = MusicDownloadTable;
+			sourceTree = "<group>";
+		};
+		FE6C4E8F22E162D300C8F2B1 /* Upload */ = {
+			isa = PBXGroup;
+			children = (
+				FE6C4E9022E162E400C8F2B1 /* Streams.swift */,
+			);
+			path = Upload;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -326,6 +339,14 @@
 				TargetAttributes = {
 					FE6C4E0022D3272300C8F2B1 = {
 						CreatedOnToolsVersion = 10.2.1;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 0;
+							};
+							com.apple.DataProtection = {
+								enabled = 0;
+							};
+						};
 					};
 					FE6C4E1422D3272600C8F2B1 = {
 						CreatedOnToolsVersion = 10.2.1;
@@ -451,6 +472,7 @@
 				FE6C4E4F22DC7B2E00C8F2B1 /* RequestBaseType.swift in Sources */,
 				FE6C4E3B22D48C2500C8F2B1 /* CameraController.swift in Sources */,
 				FE6C4E4822DC2B4900C8F2B1 /* TestCallApiViewController.swift in Sources */,
+				FE6C4E9122E162E400C8F2B1 /* Streams.swift in Sources */,
 				FE6C4E8522DFFE1800C8F2B1 /* MusicHandler.swift in Sources */,
 				FE6C4E4B22DC2D3E00C8F2B1 /* ListTableViewCell.swift in Sources */,
 				FE6C4E8B22E01B5D00C8F2B1 /* StoryboardSupports.swift in Sources */,
@@ -639,7 +661,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PVK56R4YSC;
-				INFOPLIST_FILE = DemoSignature/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/DemoSignature/Support files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -658,7 +680,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PVK56R4YSC;
-				INFOPLIST_FILE = DemoSignature/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/DemoSignature/Support files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

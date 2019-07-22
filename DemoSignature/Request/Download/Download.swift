@@ -27,3 +27,4 @@ public class Download<modelT> {
     var totalSize: String = ""
     
 }
+
