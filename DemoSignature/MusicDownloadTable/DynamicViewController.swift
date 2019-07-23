@@ -30,6 +30,7 @@ class DynamicViewController: UIViewController {
     let musicRequest = RequestCommunicator<DownloadMusic>()
     var searchMusics: [[MusicHandler]] = []
     
+    let uploadHelper = StreamsHandler()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +39,7 @@ class DynamicViewController: UIViewController {
         tableView.dataSource = self
         tableView.separatorStyle = .none
         searchBar.delegate = self
+        uploadHelper.delegate = self
         
         // Do any additional setup after loading the view.
     }
@@ -117,6 +119,10 @@ class DynamicViewController: UIViewController {
         playerViewController.player = player
         player.play()
     }
+    
+    func prepareUploadPath(_ track: MusicHandler) -> URL {
+        return localFilePath(for: track.url)
+    }
 
 }
 
@@ -180,7 +186,10 @@ extension DynamicViewController: UITableViewDelegate, UITableViewDataSource {
      
         let cell: DetailCell = tableView.dequeueReusableCell(for: indexPath)
         cell.delegate = self
-        
+        cell.layer.cornerRadius = 10
+        cell.layer.masksToBounds = true
+        cell.layer.borderColor = UIColor.darkGray.cgColor
+        cell.layer.borderWidth = 1.5
         let musicHandler = searchMusics[indexPath.section][indexPath.row]
         let download = musicRequest.activeDownloads[musicHandler.url]
         
@@ -191,7 +200,7 @@ extension DynamicViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 10
+        return 5
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -235,7 +244,7 @@ extension DynamicViewController: URLSessionDownloadDelegate {
         if let indexPath = download?.model.indexPath {
             DispatchQueue.main.async {
                 
-                self.tableView.reloadRows(at: [indexPath], with: .fade)
+                self.tableView.reloadRows(at: [indexPath], with: .none)
             }
         }
         
@@ -296,6 +305,9 @@ extension DynamicViewController: DetailCellDelegate {
         
         case .pause:
             musicRequest.pauseDownload(music)
+        
+        case .upload:
+            uploadHelper.upload(with: music)
         }
         
         tableView.reloadRows(at: [indexPath], with: .none)
@@ -303,3 +315,41 @@ extension DynamicViewController: DetailCellDelegate {
     
 }
 
+extension DynamicViewController: StreamHandlerDelegate {
+    
+    func needHeaders(on model: DownloadModelProtocol) -> [String] {
+        let music = searchMusics[model.indexPath.section][model.indexPath.row]
+        
+        return [music.name, music.artist]
+    }
+    
+    func sending(currentSize: Double, percent: Double, to destination: URL, with model: DownloadModelProtocol?) {
+        
+        guard let model = model, let cell = tableView.cellForRow(at: model.indexPath) as? DetailCell else { return }
+        
+        var unit: String = ""
+        var dividedSize: Double = 0
+        
+        if Double(currentSize) / Double(1e9) >= 1.0 {
+            dividedSize = currentSize / Double(1e9)
+            unit = "Gbyte"
+        } else if Double(currentSize) / Double(1e6) >= 1.0 {
+            dividedSize = currentSize / Double(1e6)
+            unit = "Mbyte"
+        } else {
+            dividedSize = currentSize / Double(1e3)
+            unit = "Kbyte"
+        }
+        
+        let sizePrint = String(format: "%.2f", dividedSize) + unit
+        let percentStr = String(format: "%.2f", percent)
+        
+        
+        DispatchQueue.main.async() {
+//            print("Will update display: \(sizePrint), \(percentStr)%")
+            cell.updateUploadDisplay(size: sizePrint, progress: percent, percent: percentStr, to: destination.absoluteString)
+        }
+    }
+    
+    
+}

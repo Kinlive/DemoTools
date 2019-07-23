@@ -11,6 +11,8 @@ import UIKit
 class ViewController: UIViewController {
     
     @IBOutlet weak var signatureImageView: UIImageView!
+    @IBOutlet weak var uploadingLabel: UILabel!
+    @IBOutlet weak var startUpload: UIButton!
     
     
     let uploader = StreamsHandler()
@@ -19,13 +21,18 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
 //        signatureView.delegate = self
-
+        uploader.delegate = self
+        startUpload.isHidden = true
+        startUpload.alpha = 0.0
+        
+        // prepare big data
+        uploader.testUploadBigData()
     }
     
     
     /// example for signature
     @IBAction func onSignClearClicked(_ sender: UIButton) {
-        uploader.uploadData()
+        uploader.upload(with: nil)
        
     }
     
@@ -54,7 +61,48 @@ class ViewController: UIViewController {
         }
     }
     
+}
+
+extension ViewController: StreamHandlerDelegate {
     
+    func needHeaders(on model: DownloadModelProtocol) -> [String] {
+        return []
+    }
+    
+ 
+    func sending(currentSize: Double, percent: Double, to destination: URL, with model: DownloadModelProtocol?) {
+  
+        var unit: String = ""
+        var dividedSize: Double = 0
+        
+        if Double(currentSize) / Double(1e9) >= 1.0 {
+            dividedSize = currentSize / Double(1e9)
+            unit = "Gbyte"
+        } else if Double(currentSize) / Double(1e6) >= 1.0 {
+            dividedSize = currentSize / Double(1e6)
+            unit = "Mbyte"
+        } else {
+            dividedSize = currentSize / Double(1e3)
+            unit = "Kbyte"
+        }
+        
+        let sizePrint = String(format: "%.2f", dividedSize) + unit
+        let percentStr = String(format: "%.2f", percent)
+        
+        DispatchQueue.main.async {
+            self.uploadingLabel.text = "currentSize: \(sizePrint) \n completed \(percentStr)%"
+        }
+    }
+
+    func prepareDataEnd() {
+
+        DispatchQueue.main.async {
+            self.startUpload.isHidden = false
+            UIView.animate(withDuration: 1.0, animations: {
+                self.startUpload.alpha = 1.0
+            })
+        }
+    }
 
 }
 

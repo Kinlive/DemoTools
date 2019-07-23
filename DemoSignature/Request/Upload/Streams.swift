@@ -13,36 +13,52 @@ struct Streams {
     let output: OutputStream
 }
 
+protocol StreamHandlerDelegate: class {
+    func sending(currentSize: Double, percent: Double, to destination: URL, with model: DownloadModelProtocol?)
+    func needHeaders(on model: DownloadModelProtocol) -> [String]
+    
+//     optional method defined
+    func prepareDataEnd()
+}
+// StreamHandlerDelegate optional methods
+extension StreamHandlerDelegate {
+    func prepareDataEnd() { }
+}
+
 
 class StreamsHandler: NSObject {
     
-    var session: URLSession!
-
-    var boundStreams: Streams?
+    weak var delegate: StreamHandlerDelegate?
+    
+    
+    private var session: URLSession!
+    private var boundStreams: Streams?
 
     private var canWrite: Bool = false
     
     private var data: Data = Data()
-    private var currentSendSizes = 0
     
-    var uploadTask: URLSessionUploadTask!
+    private var destinationURL: URL = URL(string: "http://localhost:3000/uploadStream")!
+    private var fromURL: URL?
     
+    private var cacheModel: DownloadModelProtocol?
     
-    override init() {
+    // MARK: - Initialize and deinitialize ============================================================
+    private override init() {
         super.init()
-        
-        // prepare big data
-        var bigStrs: String = ""
-        
-        for i in 0...Int(1e6) {
-            bigStrs += "A big data with very more count: \(i), \n"
-        }
-        let bigData = bigStrs.data(using: .utf8)
-        guard let newData = bigData else { return }
-        self.data = newData
     }
     
+    /// use convenience initialization to prepare something, default destination was local server.
+    public convenience init(destination url: URL? = nil) {
+        self.init()
+        
+        if let url = url {
+            self.destinationURL = url
+        }
+        
+    }
     
+    // deinit clear something
     deinit {
         guard let streams = boundStreams else { return }
         
@@ -54,8 +70,68 @@ class StreamsHandler: NSObject {
         }
         
     }
-   
-    func uploadData() {
+    
+    // MARK: - Actions to upload ============================================================
+    
+    /// when use this test case, reminds of implement optional delegate function *prepareDataEnd()* to call *upload(with data:)*.
+    /// - Parameter size: 1 ~= 40 byte, 1000 ~= 40Kbyte..., default ~= 4Mbyte.
+    public func testUploadBigData(size: Int = Int(1e6)) {
+        // prepare big data
+        var bigStrs: String = ""
+        
+        DispatchQueue.global().async {
+            for i in 0...size {
+                bigStrs += "A big data with very more count: \(i), \n"
+            }
+            let bigData = bigStrs.data(using: .utf8)
+            guard let newData = bigData else { return }
+            self.data = newData
+            if let delegate = self.delegate {
+                delegate.prepareDataEnd()
+            }
+        }
+    }
+    
+    public func upload(with data: Data?) {
+        if let data = data {
+            self.data = data
+        }
+        uploadData()
+    }
+    
+    public func upload(from url: URL) {
+        guard let data = try? Data(contentsOf: url) else { return }
+        self.data = data
+        uploadData()
+        
+    }
+    
+    // For FileManager use
+    // Get local file path: download task stores tune here; AV player plays it.
+    let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+    
+    func localFilePath(for url: URL) -> URL {
+        return documentsPath.appendingPathComponent(url.lastPathComponent)
+    }
+    
+    public func upload(with model: DownloadModelProtocol) {
+        cacheModel = model
+        let url = localFilePath(for: model.url)
+        
+        let urlStr = url.absoluteString.replacingOccurrences(of: "file://", with: "", options: .literal, range: nil)
+        
+        guard let data = FileManager.default.contents(atPath: urlStr) else {
+            printLog(logs: ["Data not found on:\(urlStr)"], title: "Upload data fail.")
+            return }
+        
+        self.data = data
+        uploadData()
+    }
+    
+    // MARK: - Private actions ============================================================
+    
+    /// start upload data
+    private func uploadData() {
         
         if boundStreams == nil {
             boundStreams = getNewStreams()
@@ -67,23 +143,27 @@ class StreamsHandler: NSObject {
         
         guard let stream = boundStreams, let session = session else { return }
         
-        let url = URL(string: "http://localhost:3000/uploadStream")! //"https://httpbin.org/anything")!
-        
-        var request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 30)
+        var request = URLRequest(url: destinationURL, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: .infinity)
         request.httpMethod = "POST"
-        request.addValue("uploadImage", forHTTPHeaderField: "fileName")
-        request.httpBodyStream = stream.input
-        
-        uploadTask = session.uploadTask(withStreamedRequest: request)
-    
-        uploadTask.resume()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            self.beginWriteData(stream: stream)
+        // FIXME: - custom headers.
+        if let model = cacheModel, let headerValues = delegate?.needHeaders(on: model) {
+            request.addValue(headerValues[0], forHTTPHeaderField: "fileName")
+            request.addValue(headerValues[1], forHTTPHeaderField: "path")
+        } else {
+            request.addValue("BigData_", forHTTPHeaderField: "fileName")
+            request.addValue("", forHTTPHeaderField: "path")
         }
         
+        request.httpBodyStream = stream.input
+        
+        let uploadTask = session.uploadTask(withStreamedRequest: request)
+        uploadTask.resume()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.beginWriteData(stream: stream)
+        }
     }
     
-    func getNewStreams() -> Streams {
+    private func getNewStreams() -> Streams {
         
         var inputStreamOrNil: InputStream?
         var outputStreamOrNil: OutputStream?
@@ -93,13 +173,11 @@ class StreamsHandler: NSObject {
         
         guard let input = inputStreamOrNil, let output = outputStreamOrNil else {
             fatalError("On return of `getBoundStreams`, both `inputStream` and `outputStream` will contain non-nil streams.")
-            
         }
         
         output.delegate = self
         output.schedule(in: .current, forMode: .default)
         output.open()
-        
         
         return Streams(input: input, output: output)
     }
@@ -140,8 +218,13 @@ extension StreamsHandler: URLSessionStreamDelegate {
     func urlSession(_ session: URLSession, task: URLSessionTask, didSendBodyData bytesSent: Int64, totalBytesSent: Int64, totalBytesExpectedToSend: Int64) {
         
         // FIXME: - upload process
+        let currentSize = Double(totalBytesSent)//Double(bytesSent) / 1000.0
+        let percent = (Double(totalBytesSent) / Double(data.count)) * 100
+        //printLog(logs: ["bytesSent:\(bytesSent)","totalBytesSent: \(totalBytesSent)","totalBytesExpectedToSend: \(totalBytesExpectedToSend)"], title: "didSendBodyData")
         
-        if Int(totalBytesSent) == data.count {
+        delegate?.sending(currentSize: currentSize, percent: percent, to: destinationURL, with: cacheModel)
+        
+        if Int(totalBytesSent) == data.count { // when send data all finished
             printLog(logs: ["bytesSent:\(bytesSent)","totalBytesSent: \(totalBytesSent)","totalBytesExpectedToSend: \(totalBytesExpectedToSend)"], title: "didSendBodyData")
             
             if boundStreams!.input.streamStatus == .atEnd {
@@ -152,7 +235,7 @@ extension StreamsHandler: URLSessionStreamDelegate {
                 boundStreams?.output.close()
             }
             
-            boundStreams = nil
+            self.boundStreams = nil
             session.finishTasksAndInvalidate()
             self.session = nil
         }
@@ -160,7 +243,7 @@ extension StreamsHandler: URLSessionStreamDelegate {
     }
     
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
-//        printLog(logs: [error?.localizedDescription ?? ""], title: "CompleteWithError")
+        printLog(logs: [error?.localizedDescription ?? ""], title: "CompleteWithError")
     }
 }
 

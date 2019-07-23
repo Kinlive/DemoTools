@@ -19,6 +19,7 @@ enum MusicDownloadState {
     case pause
     case resume
     case cancel
+    case upload
 }
 
 class DetailCell: UITableViewCell {
@@ -31,6 +32,13 @@ class DetailCell: UITableViewCell {
     @IBOutlet weak var downloadButton: UIButton!
     @IBOutlet weak var pauseButton: UIButton!
     @IBOutlet weak var cancelButton: UIButton!
+    
+    // upload
+    @IBOutlet weak var uploadProgressView: UIProgressView!
+    @IBOutlet weak var uploadButton: UIButton!
+    @IBOutlet weak var uploadLabel: UILabel!
+    @IBOutlet weak var destinationLabel: UILabel!
+    
     
     weak var delegate: DetailCellDelegate?
     
@@ -51,6 +59,12 @@ class DetailCell: UITableViewCell {
     @IBAction func cancel(_ sender: UIButton) {
         delegate?.musicDownloadStateChange(self, state: .cancel)
     }
+    
+    // upload action
+    @IBAction func upload(_ sender: UIButton) {
+        delegate?.musicDownloadStateChange(self, state: .upload)
+    }
+    
     
     func configureCell(music: MusicHandler, downloaded: Bool, download: Download<DownloadModelProtocol>?) {
         numbeLabel.text = music.name
@@ -80,11 +94,29 @@ class DetailCell: UITableViewCell {
         downloadButton.setTitle(downloadTitle, for: .normal)
         downloadButton.isEnabled = !downloaded
         
+        // setup upload UIs
+        uploadLabel.isHidden = downloadTitle != "Downloaded"
+        uploadButton.isHidden = downloadTitle != "Downloaded"
+        uploadProgressView.isHidden = downloadTitle != "Downloaded"
+        destinationLabel.isHidden = downloadTitle != "Downloaded"
+        
     }
     
     func updateDisplay(progress: Float, totalSize: String) {
         progressView.progress = progress
         progressLabel.text = String(format: "%.1f%% of %@", progress * 100, totalSize)
+    }
+    
+    func updateUploadDisplay(size: String, progress: Double, percent: String, to destination: String) {
+        uploadLabel.text = String(format: "%.1f%% of %@", progress, size)
+        uploadProgressView.progress = Float(progress)
+        destinationLabel.text = "->\(destination)"
+        
+        if progress == 100.0 {
+            uploadButton.setTitle("Uploaded", for: .normal)
+            uploadButton.setTitleColor(.red, for: .normal)
+            uploadButton.isEnabled = false
+        }
     }
     
 }
