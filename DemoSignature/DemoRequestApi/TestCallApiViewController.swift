@@ -54,10 +54,15 @@ class TestCallApiViewController: UIViewController {
     
     
     func tryCallApi(with target: DemoRequest) {
+        let vc: ResponseViewController = UIStoryboard(storyboard: .Main).instantiateViewController()
+        
+        
         provider.request(type: target) { (result) in
             switch result {
             case .success(let value):
                 printLog(logs: ["\(value)"], title: "Successs")
+                vc.response = value
+                self.navigationController?.pushViewController(vc, animated: true)
                 
             case .failure(let error):
                 printLog(logs: ["\(error)"], title: "Failure")

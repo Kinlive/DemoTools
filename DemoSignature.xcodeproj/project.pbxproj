@@ -40,6 +40,7 @@
 		FE6C4E8B22E01B5D00C8F2B1 /* StoryboardSupports.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6C4E8A22E01B5D00C8F2B1 /* StoryboardSupports.swift */; };
 		FE6C4E8E22E075C000C8F2B1 /* DetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6C4E8D22E075C000C8F2B1 /* DetailCell.swift */; };
 		FE6C4E9122E162E400C8F2B1 /* Streams.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6C4E9022E162E400C8F2B1 /* Streams.swift */; };
+		FE7082F022E7EF0D0018190B /* ResponseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE7082EF22E7EF0D0018190B /* ResponseViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -99,7 +100,7 @@
 		FE6C4E8A22E01B5D00C8F2B1 /* StoryboardSupports.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryboardSupports.swift; sourceTree = "<group>"; };
 		FE6C4E8D22E075C000C8F2B1 /* DetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCell.swift; sourceTree = "<group>"; };
 		FE6C4E9022E162E400C8F2B1 /* Streams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Streams.swift; sourceTree = "<group>"; };
-		FE7082E922E1AF2C0018190B /* DemoSignature.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DemoSignature.entitlements; sourceTree = "<group>"; };
+		FE7082EF22E7EF0D0018190B /* ResponseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,22 +159,14 @@
 		FE6C4E0322D3272300C8F2B1 /* DemoSignature */ = {
 			isa = PBXGroup;
 			children = (
-				FE7082E922E1AF2C0018190B /* DemoSignature.entitlements */,
+				FE7082ED22E7ED970018190B /* DemoRequestApi */,
+				FE7082EC22E7ED780018190B /* DemoPageScroll */,
+				FE7082EB22E7ED5F0018190B /* DemoCamera */,
+				FE7082EA22E7ECED0018190B /* Signature */,
 				FE6C4E8C22E0758800C8F2B1 /* MusicDownloadTable */,
 				FE6C4E5422DDBCDA00C8F2B1 /* DemoService */,
 				FE6C4E4922DC2D2400C8F2B1 /* Views */,
 				FE6C4E4622DC2B2200C8F2B1 /* Request */,
-				FE6C4E0622D3272300C8F2B1 /* ViewController.swift */,
-				FE6C4E3222D327ED00C8F2B1 /* SignatureView.swift */,
-				FE6C4E3422D432BC00C8F2B1 /* Extension+UIImage.swift */,
-				FE6C4E3622D43F3300C8F2B1 /* SnapshotViewController.swift */,
-				FE6C4E3822D444D600C8F2B1 /* Extension+UIViewController.swift */,
-				FE6C4E3A22D48C2500C8F2B1 /* CameraController.swift */,
-				FE6C4E3C22D4909100C8F2B1 /* SignatureViewController.swift */,
-				FE6C4E4022D5DA0900C8F2B1 /* PageViewController.swift */,
-				FE6C4E4222D6E23B00C8F2B1 /* CustomSwitchCell.swift */,
-				FE6C4E4422D8804D00C8F2B1 /* MoveTogether.swift */,
-				FE6C4E4722DC2B4900C8F2B1 /* TestCallApiViewController.swift */,
 				FE6C4E8922E01B3F00C8F2B1 /* Support files */,
 			);
 			path = DemoSignature;
@@ -241,12 +234,12 @@
 		FE6C4E8922E01B3F00C8F2B1 /* Support files */ = {
 			isa = PBXGroup;
 			children = (
+				FE7082EE22E7EDBC0018190B /* Helpful */,
 				FE6C4E1022D3272500C8F2B1 /* Info.plist */,
 				FE6C4E0822D3272300C8F2B1 /* Main.storyboard */,
 				FE6C4E0D22D3272500C8F2B1 /* LaunchScreen.storyboard */,
 				FE6C4E0B22D3272500C8F2B1 /* Assets.xcassets */,
 				FE6C4E0422D3272300C8F2B1 /* AppDelegate.swift */,
-				FE6C4E8A22E01B5D00C8F2B1 /* StoryboardSupports.swift */,
 			);
 			path = "Support files";
 			sourceTree = "<group>";
@@ -267,6 +260,54 @@
 				FE6C4E9022E162E400C8F2B1 /* Streams.swift */,
 			);
 			path = Upload;
+			sourceTree = "<group>";
+		};
+		FE7082EA22E7ECED0018190B /* Signature */ = {
+			isa = PBXGroup;
+			children = (
+				FE6C4E0622D3272300C8F2B1 /* ViewController.swift */,
+				FE6C4E3C22D4909100C8F2B1 /* SignatureViewController.swift */,
+				FE6C4E3222D327ED00C8F2B1 /* SignatureView.swift */,
+			);
+			path = Signature;
+			sourceTree = "<group>";
+		};
+		FE7082EB22E7ED5F0018190B /* DemoCamera */ = {
+			isa = PBXGroup;
+			children = (
+				FE6C4E3622D43F3300C8F2B1 /* SnapshotViewController.swift */,
+				FE6C4E3A22D48C2500C8F2B1 /* CameraController.swift */,
+			);
+			path = DemoCamera;
+			sourceTree = "<group>";
+		};
+		FE7082EC22E7ED780018190B /* DemoPageScroll */ = {
+			isa = PBXGroup;
+			children = (
+				FE6C4E4022D5DA0900C8F2B1 /* PageViewController.swift */,
+			);
+			path = DemoPageScroll;
+			sourceTree = "<group>";
+		};
+		FE7082ED22E7ED970018190B /* DemoRequestApi */ = {
+			isa = PBXGroup;
+			children = (
+				FE6C4E4722DC2B4900C8F2B1 /* TestCallApiViewController.swift */,
+				FE7082EF22E7EF0D0018190B /* ResponseViewController.swift */,
+			);
+			path = DemoRequestApi;
+			sourceTree = "<group>";
+		};
+		FE7082EE22E7EDBC0018190B /* Helpful */ = {
+			isa = PBXGroup;
+			children = (
+				FE6C4E8A22E01B5D00C8F2B1 /* StoryboardSupports.swift */,
+				FE6C4E3422D432BC00C8F2B1 /* Extension+UIImage.swift */,
+				FE6C4E3822D444D600C8F2B1 /* Extension+UIViewController.swift */,
+				FE6C4E4222D6E23B00C8F2B1 /* CustomSwitchCell.swift */,
+				FE6C4E4422D8804D00C8F2B1 /* MoveTogether.swift */,
+			);
+			path = Helpful;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -466,6 +507,7 @@
 				FE6C4E5622DDBCEA00C8F2B1 /* DemoRequestType.swift in Sources */,
 				FE6C4E0722D3272300C8F2B1 /* ViewController.swift in Sources */,
 				FE6C4E5122DC7C3700C8F2B1 /* RequestTasks.swift in Sources */,
+				FE7082F022E7EF0D0018190B /* ResponseViewController.swift in Sources */,
 				FE6C4E5822DECC5100C8F2B1 /* CommunicatorResponse.swift in Sources */,
 				FE6C4E5A22DECCA100C8F2B1 /* CommunicatorEnums.swift in Sources */,
 				FE6C4E8E22E075C000C8F2B1 /* DetailCell.swift in Sources */,
