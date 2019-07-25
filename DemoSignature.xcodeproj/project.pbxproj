@@ -41,6 +41,8 @@
 		FE6C4E8E22E075C000C8F2B1 /* DetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6C4E8D22E075C000C8F2B1 /* DetailCell.swift */; };
 		FE6C4E9122E162E400C8F2B1 /* Streams.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6C4E9022E162E400C8F2B1 /* Streams.swift */; };
 		FE7082F022E7EF0D0018190B /* ResponseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE7082EF22E7EF0D0018190B /* ResponseViewController.swift */; };
+		FE7082F222E82E510018190B /* CustomFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE7082F122E82E510018190B /* CustomFileManager.swift */; };
+		FE7082F422E853F70018190B /* ConvertableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE7082F322E853F70018190B /* ConvertableProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -101,6 +103,8 @@
 		FE6C4E8D22E075C000C8F2B1 /* DetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCell.swift; sourceTree = "<group>"; };
 		FE6C4E9022E162E400C8F2B1 /* Streams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Streams.swift; sourceTree = "<group>"; };
 		FE7082EF22E7EF0D0018190B /* ResponseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseViewController.swift; sourceTree = "<group>"; };
+		FE7082F122E82E510018190B /* CustomFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFileManager.swift; sourceTree = "<group>"; };
+		FE7082F322E853F70018190B /* ConvertableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvertableProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -306,6 +310,8 @@
 				FE6C4E3822D444D600C8F2B1 /* Extension+UIViewController.swift */,
 				FE6C4E4222D6E23B00C8F2B1 /* CustomSwitchCell.swift */,
 				FE6C4E4422D8804D00C8F2B1 /* MoveTogether.swift */,
+				FE7082F122E82E510018190B /* CustomFileManager.swift */,
+				FE7082F322E853F70018190B /* ConvertableProtocol.swift */,
 			);
 			path = Helpful;
 			sourceTree = "<group>";
@@ -498,6 +504,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FE7082F222E82E510018190B /* CustomFileManager.swift in Sources */,
 				FE6C4E3722D43F3300C8F2B1 /* SnapshotViewController.swift in Sources */,
 				FE6C4E8122DF218E00C8F2B1 /* DownloadProtocol.swift in Sources */,
 				FE6C4E4D22DC570A00C8F2B1 /* RequestCommunicator.swift in Sources */,
@@ -523,6 +530,7 @@
 				FE6C4E3F22D5C62F00C8F2B1 /* DynamicViewController.swift in Sources */,
 				FE6C4E0522D3272300C8F2B1 /* AppDelegate.swift in Sources */,
 				FE6C4E3522D432BC00C8F2B1 /* Extension+UIImage.swift in Sources */,
+				FE7082F422E853F70018190B /* ConvertableProtocol.swift in Sources */,
 				FE6C4E5322DDA46D00C8F2B1 /* HTTPStatusCodes.swift in Sources */,
 				FE6C4E8322DF227000C8F2B1 /* Download.swift in Sources */,
 				FE6C4E8822E001FA00C8F2B1 /* DownloadMusic.swift in Sources */,

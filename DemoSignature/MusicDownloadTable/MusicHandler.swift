@@ -9,7 +9,7 @@
 import Foundation
 
 /// A custom model conform protocol DownloadModelProtocol
-struct MusicHandler: DownloadModelProtocol {
+struct MusicHandler: Convertible, DownloadModelProtocol {
     
     let name: String
     let artist: String

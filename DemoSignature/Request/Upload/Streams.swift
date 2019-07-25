@@ -15,7 +15,7 @@ struct Streams {
 
 protocol StreamHandlerDelegate: class {
     func sending(currentSize: Double, percent: Double, to destination: URL, with model: DownloadModelProtocol?)
-    func needHeaders(on model: DownloadModelProtocol) -> [String]
+    func needHeaders(on model: DownloadModelProtocol) -> [String : String]
     
 //     optional method defined
     func prepareDataEnd()
@@ -111,7 +111,22 @@ class StreamsHandler: NSObject {
     let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
     
     func localFilePath(for url: URL) -> URL {
-        return documentsPath.appendingPathComponent(url.lastPathComponent)
+        var startAppend = false
+        var docMusicPath = documentsPath
+        
+        for component in url.pathComponents {
+            if component == documentsPath.lastPathComponent {
+                startAppend = true
+            }
+            
+            if startAppend, component != documentsPath.lastPathComponent {
+                docMusicPath.appendPathComponent(component)
+            }
+        }
+        
+        return docMusicPath
+        
+//        return documentsPath.appendingPathComponent(url.lastPathComponent)
     }
     
     public func upload(with model: DownloadModelProtocol) {
@@ -147,8 +162,10 @@ class StreamsHandler: NSObject {
         request.httpMethod = "POST"
         // FIXME: - custom headers.
         if let model = cacheModel, let headerValues = delegate?.needHeaders(on: model) {
-            request.addValue(headerValues[0], forHTTPHeaderField: "fileName")
-            request.addValue(headerValues[1], forHTTPHeaderField: "path")
+            
+            headerValues.forEach { request.addValue($1, forHTTPHeaderField: $0) }
+//            request.addValue(headerValues[0], forHTTPHeaderField: "fileName")
+//            request.addValue(headerValues[1], forHTTPHeaderField: "path")
         } else {
             request.addValue("BigData_", forHTTPHeaderField: "fileName")
             request.addValue("", forHTTPHeaderField: "path")

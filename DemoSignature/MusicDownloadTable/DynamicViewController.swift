@@ -23,7 +23,7 @@ class DynamicViewController: UIViewController {
     
     var sectionTitle: [String] = []
     
-    var whichClose = [true, true, true , true]
+    var whichClose: [Bool] = []
     
     var cacheHeaderViews: [UIView] = []
     
@@ -31,6 +31,10 @@ class DynamicViewController: UIViewController {
     var searchMusics: [[MusicHandler]] = []
     
     let uploadHelper = StreamsHandler()
+    
+    private let musicsPath: String = "musics"
+    private var saveMusicsKey = "SaveSearchedMusic"
+    private var searchedMusics: [String : [MusicHandler]] = [:]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,9 +45,49 @@ class DynamicViewController: UIViewController {
         searchBar.delegate = self
         uploadHelper.delegate = self
         
+        // prepare userDefaults data
+        if let recordSearched = UserDefaults.standard.object(forKey: saveMusicsKey) as? [String : [[String : Any]]] {
+            var sectionCount: Int = 0
+            
+            recordSearched.forEach { key, value in
+                //
+                var rowCount: Int = 0
+                
+                let eachMusics: [MusicHandler] = value.map { value in
+                    
+                    var music = MusicHandler.convertToModel(dic: value)!
+                    music.index = rowCount
+                    music.indexPath = IndexPath(item: rowCount, section: sectionCount)
+                    
+                    rowCount += 1
+                    return music
+                }
+                
+                searchedMusics[key] = eachMusics
+                
+                searchMusics.append(eachMusics)
+//                searchMusics.append(value.map { MusicHandler.convertToModel(dic: $0)!})
+                
+                whichClose.append(true)
+                sectionTitle.append(key)
+                sectionCount += 1
+            }
+            tableView.reloadData()
+            
+        }
+        
         // Do any additional setup after loading the view.
     }
-
+    
+    func saveSearchedMusic() {
+        var dataDic: [String : [[String : Any]]] = [:]
+        searchedMusics.forEach { key, value in
+            dataDic[key] = value.map { $0.convertToDic() ?? [:] }
+            
+        }
+        UserDefaults.standard.set(dataDic, forKey: saveMusicsKey)
+    }
+    
     func prepareHeaderView(on section: Int) -> UIView {
         
         if section <= cacheHeaderViews.count - 1 {
@@ -80,7 +124,7 @@ class DynamicViewController: UIViewController {
         
         if whichClose[sender.tag] {
             whichClose[sender.tag] = false
-            tableView.reloadSections(IndexSet(arrayLiteral: sender.tag), with: .fade)
+            tableView.insertRows(at: rowsIndexPath, with: .fade)
             sender.setTitle("收起", for: .normal)
 //            tableView.scrollToRow(at: IndexPath(row: (details.count - 1), section: sender.tag), at: .bottom, animated: true)
         } else {
@@ -103,8 +147,8 @@ class DynamicViewController: UIViewController {
     // Get local file path: download task stores tune here; AV player plays it.
     let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
     
-    func localFilePath(for url: URL) -> URL {
-        return documentsPath.appendingPathComponent(url.lastPathComponent)
+    func localFilePath(for fileUrl: URL) -> URL {
+        return documentsPath.appendingPathComponent(fileUrl.lastPathComponent)
     }
     
     // play music
@@ -114,14 +158,41 @@ class DynamicViewController: UIViewController {
         playerViewController.entersFullScreenWhenPlaybackBegins = true
         playerViewController.exitsFullScreenWhenPlaybackEnds = true
         present(playerViewController, animated: true, completion: nil)
-        let url = localFilePath(for: track.url)
-        let player = AVPlayer(url: url)
+//        let url = localFilePath(for: track.url)
+
+        var startAppend = false
+        var docMusicPath = documentsPath
+        
+        for component in track.url.pathComponents {
+            if component == musicsPath {
+                startAppend = true
+            }
+            
+            if startAppend {
+                docMusicPath.appendPathComponent(component)
+            }
+        }
+
+        let player = AVPlayer(url: docMusicPath)
         playerViewController.player = player
         player.play()
     }
     
     func prepareUploadPath(_ track: MusicHandler) -> URL {
-        return localFilePath(for: track.url)
+        var startAppend = false
+        var docMusicPath = documentsPath
+        
+        for component in track.url.pathComponents {
+            if component == musicsPath {
+                startAppend = true
+            }
+            
+            if startAppend {
+                docMusicPath.appendPathComponent(component)
+            }
+        }
+        
+        return docMusicPath
     }
 
 }
@@ -138,9 +209,21 @@ extension DynamicViewController: UISearchBarDelegate {
             switch result {
             case .success(let value):
                 if let musics = MusicHandler.updateSearchResults(value.data, section: self.searchMusics.count).self {
+                    
+                    // FIXME: - save with text and musics.
+                    // ....
+                    self.whichClose.append(true)
                     self.sectionTitle.append(text)
                     self.searchMusics.append(musics)
-                    self.tableView.reloadData()
+                    
+                    self.searchedMusics[text] = musics
+                    self.saveSearchedMusic()
+                    
+                    DispatchQueue.main.async {
+                        self.searchBar.text = ""
+                         self.tableView.reloadData()
+                    }
+                   
                 }
                 
             case .failure(let error):
@@ -166,6 +249,7 @@ extension DynamicViewController: UISearchBarDelegate {
 extension DynamicViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return searchMusics.count
+//        return searchedMusics.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -206,7 +290,7 @@ extension DynamicViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let music = searchMusics[indexPath.section][indexPath.row]
         if music.downloaded {
-            let showString = "musicPath: \(localFilePath(for: music.url))"
+            let showString = "musicPath: \(music.url)"
             printLog(logs: [showString], title: "Select music")
             playDownload(music)
         }
@@ -224,28 +308,32 @@ extension DynamicViewController: URLSessionDownloadDelegate {
         let download = musicRequest.activeDownloads[sourceURL]
         musicRequest.activeDownloads[sourceURL] = nil
         
-        let destinationURL = localFilePath(for: sourceURL)
+        var artistFolder: String = ""
+        if let model = download?.model as? MusicHandler {
+            artistFolder = model.artist.replacingOccurrences(of: " ", with: "_")
+        }
+        let destinationURL = CustomFileManager.appendingPath(file: sourceURL, needDirectories: "\(musicsPath)/\(artistFolder)")
+        
         printLog(logs: [destinationURL.absoluteString], title: "DestinationURL")
         
-        let fileManager = FileManager.default
-        try? fileManager.removeItem(at: destinationURL)
-        do {
-            try fileManager.copyItem(at: location, to: destinationURL)
+        CustomFileManager.saveFiles(fromUrl: location, to: destinationURL) { (destination, ok, error) in
+            if let _ = error { return }
             
-            if let indexPath = download?.model.indexPath {
-                // update to searchMusics
-                searchMusics[indexPath.section][indexPath.row].downloaded = true
-            }
-        } catch let error {
-            printLog(logs: [error.localizedDescription], title: "Download fail")
-        }
-        
-        // refresh UI for download complete...
-        if let indexPath = download?.model.indexPath {
+            guard let indexPath = download?.model.indexPath else { return }
+            
+            // update to searchMusics
+            searchMusics[indexPath.section][indexPath.row].downloaded = true
+            searchMusics[indexPath.section][indexPath.row].url = destinationURL
+            
+            // key: sectionTitle[indexPath.section] -> (search_text), indexPath.row -> (which music state changed).
+            searchedMusics[sectionTitle[indexPath.section]]?[indexPath.row].downloaded = true
+            searchedMusics[sectionTitle[indexPath.section]]?[indexPath.row].url = destinationURL
+            saveSearchedMusic()
+            
             DispatchQueue.main.async {
-                
                 self.tableView.reloadRows(at: [indexPath], with: .none)
             }
+            
         }
         
     }
@@ -317,10 +405,15 @@ extension DynamicViewController: DetailCellDelegate {
 
 extension DynamicViewController: StreamHandlerDelegate {
     
-    func needHeaders(on model: DownloadModelProtocol) -> [String] {
+    func needHeaders(on model: DownloadModelProtocol) -> [String : String] {
         let music = searchMusics[model.indexPath.section][model.indexPath.row]
         
-        return [music.name, music.artist]
+        let dic: [String : String] = [
+            "fileName" : music.name,
+            "path" : music.artist
+        ]
+        
+        return dic
     }
     
     func sending(currentSize: Double, percent: Double, to destination: URL, with model: DownloadModelProtocol?) {

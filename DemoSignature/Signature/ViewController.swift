@@ -64,11 +64,9 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: StreamHandlerDelegate {
-    
-    func needHeaders(on model: DownloadModelProtocol) -> [String] {
-        return []
+    func needHeaders(on model: DownloadModelProtocol) -> [String : String] {
+        return [:]
     }
-    
  
     func sending(currentSize: Double, percent: Double, to destination: URL, with model: DownloadModelProtocol?) {
   
