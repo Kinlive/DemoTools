@@ -164,8 +164,7 @@ class StreamsHandler: NSObject {
         if let model = cacheModel, let headerValues = delegate?.needHeaders(on: model) {
             
             headerValues.forEach { request.addValue($1, forHTTPHeaderField: $0) }
-//            request.addValue(headerValues[0], forHTTPHeaderField: "fileName")
-//            request.addValue(headerValues[1], forHTTPHeaderField: "path")
+            
         } else {
             request.addValue("BigData_", forHTTPHeaderField: "fileName")
             request.addValue("", forHTTPHeaderField: "path")

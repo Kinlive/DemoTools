@@ -43,6 +43,9 @@
 		FE7082F022E7EF0D0018190B /* ResponseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE7082EF22E7EF0D0018190B /* ResponseViewController.swift */; };
 		FE7082F222E82E510018190B /* CustomFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE7082F122E82E510018190B /* CustomFileManager.swift */; };
 		FE7082F422E853F70018190B /* ConvertableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE7082F322E853F70018190B /* ConvertableProtocol.swift */; };
+		FE7082F722E9A8090018190B /* SQLiteHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE7082F622E9A8090018190B /* SQLiteHelper.swift */; };
+		FE7082F922EAE6190018190B /* SQLiteColumnCreater.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE7082F822EAE6190018190B /* SQLiteColumnCreater.swift */; };
+		FE7082FB22EE87670018190B /* SQLiteColumnInserter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE7082FA22EE87670018190B /* SQLiteColumnInserter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -105,6 +108,9 @@
 		FE7082EF22E7EF0D0018190B /* ResponseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseViewController.swift; sourceTree = "<group>"; };
 		FE7082F122E82E510018190B /* CustomFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFileManager.swift; sourceTree = "<group>"; };
 		FE7082F322E853F70018190B /* ConvertableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvertableProtocol.swift; sourceTree = "<group>"; };
+		FE7082F622E9A8090018190B /* SQLiteHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteHelper.swift; sourceTree = "<group>"; };
+		FE7082F822EAE6190018190B /* SQLiteColumnCreater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteColumnCreater.swift; sourceTree = "<group>"; };
+		FE7082FA22EE87670018190B /* SQLiteColumnInserter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteColumnInserter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,6 +169,7 @@
 		FE6C4E0322D3272300C8F2B1 /* DemoSignature */ = {
 			isa = PBXGroup;
 			children = (
+				FE7082F522E9A7DB0018190B /* DataBase */,
 				FE7082ED22E7ED970018190B /* DemoRequestApi */,
 				FE7082EC22E7ED780018190B /* DemoPageScroll */,
 				FE7082EB22E7ED5F0018190B /* DemoCamera */,
@@ -314,6 +321,16 @@
 				FE7082F322E853F70018190B /* ConvertableProtocol.swift */,
 			);
 			path = Helpful;
+			sourceTree = "<group>";
+		};
+		FE7082F522E9A7DB0018190B /* DataBase */ = {
+			isa = PBXGroup;
+			children = (
+				FE7082F622E9A8090018190B /* SQLiteHelper.swift */,
+				FE7082F822EAE6190018190B /* SQLiteColumnCreater.swift */,
+				FE7082FA22EE87670018190B /* SQLiteColumnInserter.swift */,
+			);
+			path = DataBase;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -513,6 +530,7 @@
 				FE6C4E3D22D4909100C8F2B1 /* SignatureViewController.swift in Sources */,
 				FE6C4E5622DDBCEA00C8F2B1 /* DemoRequestType.swift in Sources */,
 				FE6C4E0722D3272300C8F2B1 /* ViewController.swift in Sources */,
+				FE7082FB22EE87670018190B /* SQLiteColumnInserter.swift in Sources */,
 				FE6C4E5122DC7C3700C8F2B1 /* RequestTasks.swift in Sources */,
 				FE7082F022E7EF0D0018190B /* ResponseViewController.swift in Sources */,
 				FE6C4E5822DECC5100C8F2B1 /* CommunicatorResponse.swift in Sources */,
@@ -531,10 +549,12 @@
 				FE6C4E0522D3272300C8F2B1 /* AppDelegate.swift in Sources */,
 				FE6C4E3522D432BC00C8F2B1 /* Extension+UIImage.swift in Sources */,
 				FE7082F422E853F70018190B /* ConvertableProtocol.swift in Sources */,
+				FE7082F922EAE6190018190B /* SQLiteColumnCreater.swift in Sources */,
 				FE6C4E5322DDA46D00C8F2B1 /* HTTPStatusCodes.swift in Sources */,
 				FE6C4E8322DF227000C8F2B1 /* Download.swift in Sources */,
 				FE6C4E8822E001FA00C8F2B1 /* DownloadMusic.swift in Sources */,
 				FE6C4E4522D8804D00C8F2B1 /* MoveTogether.swift in Sources */,
+				FE7082F722E9A8090018190B /* SQLiteHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

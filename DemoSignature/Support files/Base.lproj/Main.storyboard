@@ -32,14 +32,101 @@
                                 </connections>
                             </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="TgR-cy-ErP">
-                                <rect key="frame" x="10" y="493" width="394" height="300"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="300" id="tbT-9s-exn"/>
-                                </constraints>
+                                <rect key="frame" x="10" y="578.5" width="394" height="214.5"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="07Q-Ay-7LP">
-                                <rect key="frame" x="20" y="164" width="374" height="299"/>
+                                <rect key="frame" x="20" y="164" width="374" height="384.5"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Zaq-Ti-ZAV">
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="384.5"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="GlS-F4-OoS">
+                                                <rect key="frame" x="0.0" y="0.0" width="187" height="384.5"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R1G-4k-iOw">
+                                                        <rect key="frame" x="0.0" y="0.0" width="187" height="96"/>
+                                                        <color key="backgroundColor" red="0.42618704660000001" green="0.74290988869999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <state key="normal" title="CreateTable">
+                                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="creatTable:" destination="ccl-wq-4yg" eventType="touchUpInside" id="cU7-WS-MIN"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cMS-f3-488">
+                                                        <rect key="frame" x="0.0" y="96" width="187" height="96.5"/>
+                                                        <state key="normal" title="Write"/>
+                                                        <connections>
+                                                            <action selector="write:" destination="ccl-wq-4yg" eventType="touchUpInside" id="ZeO-E4-3Lj"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w8G-g4-Mnd">
+                                                        <rect key="frame" x="0.0" y="192.5" width="187" height="96"/>
+                                                        <color key="backgroundColor" red="0.42618704660000001" green="0.74290988869999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <state key="normal" title="Insert array">
+                                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="insertArray:" destination="ccl-wq-4yg" eventType="touchUpInside" id="zQO-vd-RhU"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ols-Yf-ijf">
+                                                        <rect key="frame" x="0.0" y="288.5" width="187" height="96"/>
+                                                        <state key="normal" title="Query"/>
+                                                        <connections>
+                                                            <action selector="query:" destination="ccl-wq-4yg" eventType="touchUpInside" id="oeX-Ai-hto"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="9kh-ck-IHX">
+                                                <rect key="frame" x="187" y="0.0" width="187" height="384.5"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IKf-NB-6In">
+                                                        <rect key="frame" x="0.0" y="0.0" width="187" height="96"/>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <state key="normal" title="Update"/>
+                                                        <connections>
+                                                            <action selector="update:" destination="ccl-wq-4yg" eventType="touchUpInside" id="GvT-AY-gr3"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hzR-99-hXR">
+                                                        <rect key="frame" x="0.0" y="96" width="187" height="96.5"/>
+                                                        <color key="backgroundColor" red="0.42618704660000001" green="0.74290988869999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <state key="normal" title="Delete">
+                                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="deleteRow:" destination="ccl-wq-4yg" eventType="touchUpInside" id="VGd-hj-eyY"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0qK-YX-sfy">
+                                                        <rect key="frame" x="0.0" y="192.5" width="187" height="96"/>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <state key="normal" title="QueryAll"/>
+                                                        <connections>
+                                                            <action selector="queryAll:" destination="ccl-wq-4yg" eventType="touchUpInside" id="8Xe-As-a11"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xg1-WK-UbD">
+                                                        <rect key="frame" x="0.0" y="288.5" width="187" height="96"/>
+                                                        <color key="backgroundColor" red="0.42618704660000001" green="0.74290988869999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <state key="normal" title="Not define">
+                                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </state>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="Zaq-Ti-ZAV" firstAttribute="leading" secondItem="07Q-Ay-7LP" secondAttribute="leading" id="1cj-wG-SHz"/>
+                                    <constraint firstAttribute="bottom" secondItem="Zaq-Ti-ZAV" secondAttribute="bottom" id="Jsf-CJ-NE1"/>
+                                    <constraint firstItem="Zaq-Ti-ZAV" firstAttribute="top" secondItem="07Q-Ay-7LP" secondAttribute="top" id="Nnq-iF-Kvi"/>
+                                    <constraint firstAttribute="trailing" secondItem="Zaq-Ti-ZAV" secondAttribute="trailing" id="pCJ-U0-qHh"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -53,6 +140,7 @@
                             <constraint firstItem="07Q-Ay-7LP" firstAttribute="leading" secondItem="8Eu-eN-x7i" secondAttribute="leading" constant="20" id="fBc-MH-hli"/>
                             <constraint firstItem="TyK-Xc-Sfr" firstAttribute="centerX" secondItem="6e7-R2-9yI" secondAttribute="centerX" id="gaR-hM-yt1"/>
                             <constraint firstItem="8Eu-eN-x7i" firstAttribute="bottom" secondItem="TgR-cy-ErP" secondAttribute="bottom" constant="20" id="iDA-MT-SaC"/>
+                            <constraint firstItem="07Q-Ay-7LP" firstAttribute="height" secondItem="8Eu-eN-x7i" secondAttribute="height" multiplier="0.5" id="jxL-OH-VIP"/>
                             <constraint firstItem="TyK-Xc-Sfr" firstAttribute="top" secondItem="8Eu-eN-x7i" secondAttribute="top" constant="40" id="u9G-mE-w3I"/>
                             <constraint firstItem="TyK-Xc-Sfr" firstAttribute="leading" secondItem="8Eu-eN-x7i" secondAttribute="leading" constant="30" id="zcu-4W-Fo4"/>
                         </constraints>

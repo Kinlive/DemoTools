@@ -19,9 +19,95 @@ class SnapshotViewController: UIViewController {
     var imagePicker: UIImagePickerController!
     var overlayView: UIView!
     
+    let sqlHelper = SQLiteHelper()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
     }
+    
+    @IBAction func creatTable(_ sender: UIButton) {
+//        sqlHelper.createTable()
+        sqlHelper.createTable(tableName: "DemoTable", columns: [
+            .int(name: "id", asPrimaryKey: true, notNull: true, autoIncrement: true),
+            .text(name: "userName", notNull: true),
+            .text(name: "phoneNumber", notNull: false),
+            .real(name: "distance", notNull: false)
+        ]) { result in
+            switch result {
+            case .success:
+                print("Create table successful")
+            case .failure(let error): //(let error):
+                if case .Step(let message) = error {
+                    print("Create table failure: \(message)")
+                }
+                
+                if case .OpenDatabase(let message) = error {
+                    print("OpenDatabase table failure: \(message)")
+                }
+            }
+        }
+    }
+    
+    var insertsCount: Int = 1
+    
+    @IBAction func write(_ sender: UIButton) {
+//        sqlHelper.insert()
+//        let action = SQLiteAction.insert(tableName: "DemoTable", columnValue: [
+//                .text(column: "userName", value: "Kin\(insertsCount)"),
+//                .text(column: "phoneNumber", value: "091912345\(insertsCount)"),
+//                .real(column: "distance", value: Double(100 * insertsCount))
+//            ])
+//
+//        sqlHelper.insert(action: action) { result in
+//                switch result {
+//                case .success:
+//                    printLog(logs: [action.statementString], title: "Insert success")
+//                case .failure(let error):
+//                    printLog(logs: [error.message], title: "Insert failure")
+//                }
+//        }
+//
+        insertsCount += 1
+        
+        ///
+        let teststring = SQLiteAction.select(columns: nil, fromTable: "DemoTable", wheres: [
+            // WHERE id = 1
+//            .wheres(column: "id", condition: .equal, beCompared: "1"),
+            // AND userName LIKE '%Bo%'
+            .wheres(column: "userName", condition: .like(as: "in"), beCompared: nil),
+            .wheres(column: nil, condition: .limit, beCompared: "5"),
+            .wheres(column: "phoneNumber", condition: .like(as: "09"), beCompared: nil),
+            .wheres(column: nil, condition: .orderBy(column: "id", arrange: .desc), beCompared: nil),
+            .wheres(column: "id", condition: .greatOrEqual, beCompared: "0")
+            ]).statementString
+        
+        printLog(logs: [teststring], title: "TestSelect")
+//        SQLiteOperators.orderBy(column: "==", arrange: .desc)
+        ///
+    }
+    
+    @IBAction func insertArray(_ sender: UIButton) {
+        sqlHelper.forArraysInsert(arrays: ["Andy", "Bob", "Cindy", "David", "Eric", "Gaso", "Hellen"])
+        
+    }
+    
+    @IBAction func query(_ sender: UIButton) {
+        sqlHelper.query()
+    }
+    
+    @IBAction func update(_ sender: UIButton) {
+        sqlHelper.update()
+        sqlHelper.query()
+    }
+    @IBAction func queryAll(_ sender: UIButton) {
+        sqlHelper.queryAll()
+    }
+    
+    @IBAction func deleteRow(_ sender: UIButton) {
+        sqlHelper.delete()
+    }
+    
     
     @IBAction func onCameraClicked(_ sender: UIButton) {
         guard UIImagePickerController.isSourceTypeAvailable(.camera) else { return }
