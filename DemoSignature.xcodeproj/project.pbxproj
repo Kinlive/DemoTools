@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FE15F87123557A0700C9BB7E /* PracticeMVVMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE15F87023557A0700C9BB7E /* PracticeMVVMViewController.swift */; };
 		FE6C4E0522D3272300C8F2B1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6C4E0422D3272300C8F2B1 /* AppDelegate.swift */; };
 		FE6C4E0722D3272300C8F2B1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6C4E0622D3272300C8F2B1 /* ViewController.swift */; };
 		FE6C4E0A22D3272300C8F2B1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FE6C4E0822D3272300C8F2B1 /* Main.storyboard */; };
@@ -66,6 +67,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FE15F87023557A0700C9BB7E /* PracticeMVVMViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeMVVMViewController.swift; sourceTree = "<group>"; };
 		FE6C4E0122D3272300C8F2B1 /* DemoSignature.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DemoSignature.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE6C4E0422D3272300C8F2B1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FE6C4E0622D3272300C8F2B1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -145,6 +147,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		FE15F86F235579E500C9BB7E /* DemoMVVM */ = {
+			isa = PBXGroup;
+			children = (
+				FE15F87023557A0700C9BB7E /* PracticeMVVMViewController.swift */,
+			);
+			path = DemoMVVM;
+			sourceTree = "<group>";
+		};
 		FE6C4DF822D3272300C8F2B1 = {
 			isa = PBXGroup;
 			children = (
@@ -169,6 +179,7 @@
 		FE6C4E0322D3272300C8F2B1 /* DemoSignature */ = {
 			isa = PBXGroup;
 			children = (
+				FE15F86F235579E500C9BB7E /* DemoMVVM */,
 				FE7082F522E9A7DB0018190B /* DataBase */,
 				FE7082ED22E7ED970018190B /* DemoRequestApi */,
 				FE7082EC22E7ED780018190B /* DemoPageScroll */,
@@ -539,6 +550,7 @@
 				FE6C4E4F22DC7B2E00C8F2B1 /* RequestBaseType.swift in Sources */,
 				FE6C4E3B22D48C2500C8F2B1 /* CameraController.swift in Sources */,
 				FE6C4E4822DC2B4900C8F2B1 /* TestCallApiViewController.swift in Sources */,
+				FE15F87123557A0700C9BB7E /* PracticeMVVMViewController.swift in Sources */,
 				FE6C4E9122E162E400C8F2B1 /* Streams.swift in Sources */,
 				FE6C4E8522DFFE1800C8F2B1 /* MusicHandler.swift in Sources */,
 				FE6C4E4B22DC2D3E00C8F2B1 /* ListTableViewCell.swift in Sources */,
