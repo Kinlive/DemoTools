@@ -21,20 +21,15 @@ class DynamicViewController: UIViewController {
         return recognizer
     }()
     
-    var sectionTitle: [String] = []
-    
-    var whichClose: [Bool] = []
     
     var cacheHeaderViews: [UIView] = []
-    
-    let musicRequest = RequestCommunicator<DownloadMusic>()
-    var searchMusics: [[MusicHandler]] = []
-    
+   
     let uploadHelper = StreamsHandler()
     
-    private let musicsPath: String = "musics"
-    private var saveMusicsKey = "SaveSearchedMusic"
-    private var searchedMusics: [String : [MusicHandler]] = [:]
+    
+    lazy var dynamicViewModel: DynamicViewModel = {
+       return DynamicViewModel(bindingOn: self)
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,7 +41,7 @@ class DynamicViewController: UIViewController {
         uploadHelper.delegate = self
         
         // prepare userDefaults data
-        if let recordSearched = UserDefaults.standard.object(forKey: saveMusicsKey) as? [String : [[String : Any]]] {
+        if let recordSearched = UserDefaults.standard.object(forKey: dynamicViewModel.saveMusicsKey) as? [String : [[String : Any]]] {
             var sectionCount: Int = 0
             
             recordSearched.forEach { key, value in
@@ -63,13 +58,13 @@ class DynamicViewController: UIViewController {
                     return music
                 }
                 
-                searchedMusics[key] = eachMusics
+                dynamicViewModel.searchedMusics[key] = eachMusics
                 
-                searchMusics.append(eachMusics)
+                dynamicViewModel.searchMusics.append(eachMusics)
 //                searchMusics.append(value.map { MusicHandler.convertToModel(dic: $0)!})
                 
-                whichClose.append(true)
-                sectionTitle.append(key)
+                dynamicViewModel.whichClose.append(true)
+                dynamicViewModel.sectionTitle.append(key)
                 sectionCount += 1
             }
             tableView.reloadData()
@@ -79,14 +74,6 @@ class DynamicViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-    func saveSearchedMusic() {
-        var dataDic: [String : [[String : Any]]] = [:]
-        searchedMusics.forEach { key, value in
-            dataDic[key] = value.map { $0.convertToDic() ?? [:] }
-            
-        }
-        UserDefaults.standard.set(dataDic, forKey: saveMusicsKey)
-    }
     
     func prepareHeaderView(on section: Int) -> UIView {
         
@@ -94,7 +81,7 @@ class DynamicViewController: UIViewController {
             return cacheHeaderViews[section]
         }
         
-        let title = sectionTitle[section]
+        let title = dynamicViewModel.titleWith(section: section)
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 100))
         headerView.backgroundColor = UIColor(red: 135 / 255.0, green: 180 / 255.0, blue: 200 / 255.0, alpha: 1.0)
         let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.frame.width * 0.5, height: 40))
@@ -116,19 +103,19 @@ class DynamicViewController: UIViewController {
     @objc
     func whenClickedOn(_ sender: UIButton) {
         
-        let details = searchMusics[sender.tag]
+        let details = dynamicViewModel.searchMusics[sender.tag]//searchMusics[sender.tag]
         var rowsIndexPath: [IndexPath] = []
         for i in 0 ..< details.count {
             rowsIndexPath.append(IndexPath(item: i, section: sender.tag))
         }
         
-        if whichClose[sender.tag] {
-            whichClose[sender.tag] = false
+        if dynamicViewModel.whichClose[sender.tag] {
+            dynamicViewModel.whichClose[sender.tag] = false
             tableView.insertRows(at: rowsIndexPath, with: .fade)
             sender.setTitle("收起", for: .normal)
 //            tableView.scrollToRow(at: IndexPath(row: (details.count - 1), section: sender.tag), at: .bottom, animated: true)
         } else {
-            whichClose[sender.tag] = true
+            dynamicViewModel.whichClose[sender.tag] = true
             tableView.deleteRows(at: rowsIndexPath, with: .fade)
             sender.setTitle("展開", for: .normal)
         }
@@ -164,7 +151,7 @@ class DynamicViewController: UIViewController {
         var docMusicPath = documentsPath
         
         for component in track.url.pathComponents {
-            if component == musicsPath {
+            if component == dynamicViewModel.musicsPath {
                 startAppend = true
             }
             
@@ -183,7 +170,7 @@ class DynamicViewController: UIViewController {
         var docMusicPath = documentsPath
         
         for component in track.url.pathComponents {
-            if component == musicsPath {
+            if component == dynamicViewModel.musicsPath {
                 startAppend = true
             }
             
@@ -202,34 +189,7 @@ extension DynamicViewController: UISearchBarDelegate {
         dismissKeyboard()
         
         guard let text = searchBar.text, !text.isEmpty else { return }
-        
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        musicRequest.request(type: .searchMusic(media: "music", entity: "song", term: searchBar.text!)) { (result) in
-            UIApplication.shared.isNetworkActivityIndicatorVisible = false
-            switch result {
-            case .success(let value):
-                if let musics = MusicHandler.updateSearchResults(value.data, section: self.searchMusics.count).self {
-                    
-                    // FIXME: - save with text and musics.
-                    // ....
-                    self.whichClose.append(true)
-                    self.sectionTitle.append(text)
-                    self.searchMusics.append(musics)
-                    
-                    self.searchedMusics[text] = musics
-                    self.saveSearchedMusic()
-                    
-                    DispatchQueue.main.async {
-                        self.searchBar.text = ""
-                         self.tableView.reloadData()
-                    }
-                   
-                }
-                
-            case .failure(let error):
-                printLog(logs: [error.localizedDescription], title: "Response error")
-            }
-        }
+        dynamicViewModel.onSearchSongsWith(name: text)
         
     }
     
@@ -248,13 +208,13 @@ extension DynamicViewController: UISearchBarDelegate {
 
 extension DynamicViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return searchMusics.count
+        return dynamicViewModel.numberOfSectionWithModels()
 //        return searchedMusics.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return whichClose[section] ? 0 : searchMusics[section].count
+        return dynamicViewModel.numberOfRowsWithModels(section: section)
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -274,8 +234,8 @@ extension DynamicViewController: UITableViewDelegate, UITableViewDataSource {
         cell.layer.masksToBounds = true
         cell.layer.borderColor = UIColor.darkGray.cgColor
         cell.layer.borderWidth = 1.5
-        let musicHandler = searchMusics[indexPath.section][indexPath.row]
-        let download = musicRequest.activeDownloads[musicHandler.url]
+        let musicHandler = dynamicViewModel.musicHandler(at: indexPath)
+        let download = dynamicViewModel.activeDownload(at: musicHandler.url)
         
         cell.configureCell(music: musicHandler, downloaded: musicHandler.downloaded, download: download)
    
@@ -288,7 +248,7 @@ extension DynamicViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let music = searchMusics[indexPath.section][indexPath.row]
+        let music = dynamicViewModel.musicHandler(at: indexPath)
         if music.downloaded {
             let showString = "musicPath: \(music.url)"
             printLog(logs: [showString], title: "Select music")
@@ -305,35 +265,26 @@ extension DynamicViewController: URLSessionDownloadDelegate {
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
         
         guard let sourceURL = downloadTask.originalRequest?.url else { return }
-        let download = musicRequest.activeDownloads[sourceURL]
-        musicRequest.activeDownloads[sourceURL] = nil
+        let download = dynamicViewModel.activeDownload(at: sourceURL)
+        
+        dynamicViewModel.setActiveDownload(value: nil, at: sourceURL)
         
         var artistFolder: String = ""
         if let model = download?.model as? MusicHandler {
             artistFolder = model.artist.replacingOccurrences(of: " ", with: "_")
         }
-        let destinationURL = CustomFileManager.appendingPath(file: sourceURL, needDirectories: "\(musicsPath)/\(artistFolder)")
+        let destinationURL = CustomFileManager.appendingPath(file: sourceURL, needDirectories: "\(dynamicViewModel.musicsPath)/\(artistFolder)")
         
         printLog(logs: [destinationURL.absoluteString], title: "DestinationURL")
         
-        CustomFileManager.saveFiles(fromUrl: location, to: destinationURL) { (destination, ok, error) in
+        CustomFileManager.saveFiles(fromUrl: location, to: destinationURL) { [weak self] (destination, ok, error) in
             if let _ = error { return }
             
             guard let indexPath = download?.model.indexPath else { return }
             
             // update to searchMusics
-            searchMusics[indexPath.section][indexPath.row].downloaded = true
-            searchMusics[indexPath.section][indexPath.row].url = destinationURL
-            
-            // key: sectionTitle[indexPath.section] -> (search_text), indexPath.row -> (which music state changed).
-            searchedMusics[sectionTitle[indexPath.section]]?[indexPath.row].downloaded = true
-            searchedMusics[sectionTitle[indexPath.section]]?[indexPath.row].url = destinationURL
-            saveSearchedMusic()
-            
-            DispatchQueue.main.async {
-                self.tableView.reloadRows(at: [indexPath], with: .none)
-            }
-            
+            self?.dynamicViewModel.setSearchMusicsState(downloaded: true, destinationURL: destinationURL, at: indexPath)
+
         }
         
     }
@@ -341,7 +292,7 @@ extension DynamicViewController: URLSessionDownloadDelegate {
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
         
         guard let url = downloadTask.originalRequest?.url,
-            let download = musicRequest.activeDownloads[url] else { return }
+            let download = dynamicViewModel.activeDownload(at: url) else { return }
         
         // progress
         download.progress = Float(totalBytesWritten) / Float(totalBytesExpectedToWrite)
@@ -368,12 +319,12 @@ extension DynamicViewController: DetailCellDelegate {
     func musicDownloadStateChange(_ cell: DetailCell, state: MusicDownloadState) {
         
         guard let indexPath = tableView.indexPath(for: cell) else { return }
-        let music = searchMusics[indexPath.section][indexPath.row]
+        let music = dynamicViewModel.musicHandler(at: indexPath)//searchMusics[indexPath.section][indexPath.row]
     
         // musicRequest action for download/pause/resume....
         switch state {
         case .download:
-            musicRequest.request(type: .downloadMusic(handler: music, delegateTarget: self)) { (result) in
+            dynamicViewModel.musicRequest.request(type: .downloadMusic(handler: music, delegateTarget: self)) { (result) in
                 DispatchQueue.main.async {
                     if case let .failure(error) = result {
                         printLog(logs: [error.localizedDescription], title: "Download music failure")
@@ -386,13 +337,13 @@ extension DynamicViewController: DetailCellDelegate {
             }
             
         case .cancel:
-            musicRequest.cancelDownload(music)
+            dynamicViewModel.musicRequest.cancelDownload(music)
         
         case .resume:
-            musicRequest.resumeDownload(music)
+            dynamicViewModel.musicRequest.resumeDownload(music)
         
         case .pause:
-            musicRequest.pauseDownload(music)
+            dynamicViewModel.musicRequest.pauseDownload(music)
         
         case .upload:
             uploadHelper.upload(with: music)
@@ -406,7 +357,7 @@ extension DynamicViewController: DetailCellDelegate {
 extension DynamicViewController: StreamHandlerDelegate {
     
     func needHeaders(on model: DownloadModelProtocol) -> [String : String] {
-        let music = searchMusics[model.indexPath.section][model.indexPath.row]
+        let music = dynamicViewModel.musicHandler(at: model.indexPath)
         
         let dic: [String : String] = [
             "fileName" : music.name,
@@ -445,4 +396,39 @@ extension DynamicViewController: StreamHandlerDelegate {
     }
     
     
+}
+
+// MARK: - Binding actions
+extension DynamicViewController: DynamicViewModelDelegate {
+    func onReloadTableView(indexPath: IndexPath?) {
+        
+        DispatchQueue.main.async {
+            if let indexPath = indexPath {
+                self.tableView.reloadRows(at: [indexPath], with: .none)
+            } else {
+                self.tableView.reloadData()
+            }
+        }
+    }
+    
+    func onSearchEnded(texts: String) {
+        
+    }
+    
+    func onTappedSectionOf(indexPath: IndexPath) {
+        
+    }
+    
+    func onSearching() {
+        
+    }
+    
+    func onSearchFail(error: NetworkError) {
+        convienceAlert(alert: "Error", alertMessage: error.localizedDescription, actions: ["確認"], completion: nil, actionCompletion: nil)
+        
+        
+    }
+    
+    
+
 }

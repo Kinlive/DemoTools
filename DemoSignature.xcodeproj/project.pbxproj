@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		FE15F87123557A0700C9BB7E /* PracticeMVVMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE15F87023557A0700C9BB7E /* PracticeMVVMViewController.swift */; };
+		FE15F8792355B43000C9BB7E /* DynamicViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE15F8782355B43000C9BB7E /* DynamicViewModel.swift */; };
+		FE15F87B2355B47000C9BB7E /* DetailCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE15F87A2355B47000C9BB7E /* DetailCellViewModel.swift */; };
 		FE6C4E0522D3272300C8F2B1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6C4E0422D3272300C8F2B1 /* AppDelegate.swift */; };
 		FE6C4E0722D3272300C8F2B1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6C4E0622D3272300C8F2B1 /* ViewController.swift */; };
 		FE6C4E0A22D3272300C8F2B1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FE6C4E0822D3272300C8F2B1 /* Main.storyboard */; };
@@ -68,6 +70,8 @@
 
 /* Begin PBXFileReference section */
 		FE15F87023557A0700C9BB7E /* PracticeMVVMViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeMVVMViewController.swift; sourceTree = "<group>"; };
+		FE15F8782355B43000C9BB7E /* DynamicViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicViewModel.swift; sourceTree = "<group>"; };
+		FE15F87A2355B47000C9BB7E /* DetailCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCellViewModel.swift; sourceTree = "<group>"; };
 		FE6C4E0122D3272300C8F2B1 /* DemoSignature.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DemoSignature.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE6C4E0422D3272300C8F2B1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FE6C4E0622D3272300C8F2B1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -150,9 +154,42 @@
 		FE15F86F235579E500C9BB7E /* DemoMVVM */ = {
 			isa = PBXGroup;
 			children = (
+				FE15F87E2356AEC600C9BB7E /* Model */,
+				FE15F87D2356AEC000C9BB7E /* ViewModel */,
+				FE15F87C2356AEBA00C9BB7E /* Views */,
 				FE15F87023557A0700C9BB7E /* PracticeMVVMViewController.swift */,
 			);
 			path = DemoMVVM;
+			sourceTree = "<group>";
+		};
+		FE15F8772355B3BD00C9BB7E /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				FE15F8782355B43000C9BB7E /* DynamicViewModel.swift */,
+				FE15F87A2355B47000C9BB7E /* DetailCellViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		FE15F87C2356AEBA00C9BB7E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		FE15F87D2356AEC000C9BB7E /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		FE15F87E2356AEC600C9BB7E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		FE6C4DF822D3272300C8F2B1 = {
@@ -269,6 +306,7 @@
 		FE6C4E8C22E0758800C8F2B1 /* MusicDownloadTable */ = {
 			isa = PBXGroup;
 			children = (
+				FE15F8772355B3BD00C9BB7E /* ViewModel */,
 				FE6C4E8422DFFE1800C8F2B1 /* MusicHandler.swift */,
 				FE6C4E3E22D5C62F00C8F2B1 /* DynamicViewController.swift */,
 				FE6C4E8D22E075C000C8F2B1 /* DetailCell.swift */,
@@ -558,6 +596,7 @@
 				FE6C4E3922D444D600C8F2B1 /* Extension+UIViewController.swift in Sources */,
 				FE6C4E3322D327ED00C8F2B1 /* SignatureView.swift in Sources */,
 				FE6C4E3F22D5C62F00C8F2B1 /* DynamicViewController.swift in Sources */,
+				FE15F8792355B43000C9BB7E /* DynamicViewModel.swift in Sources */,
 				FE6C4E0522D3272300C8F2B1 /* AppDelegate.swift in Sources */,
 				FE6C4E3522D432BC00C8F2B1 /* Extension+UIImage.swift in Sources */,
 				FE7082F422E853F70018190B /* ConvertableProtocol.swift in Sources */,
@@ -565,6 +604,7 @@
 				FE6C4E5322DDA46D00C8F2B1 /* HTTPStatusCodes.swift in Sources */,
 				FE6C4E8322DF227000C8F2B1 /* Download.swift in Sources */,
 				FE6C4E8822E001FA00C8F2B1 /* DownloadMusic.swift in Sources */,
+				FE15F87B2355B47000C9BB7E /* DetailCellViewModel.swift in Sources */,
 				FE6C4E4522D8804D00C8F2B1 /* MoveTogether.swift in Sources */,
 				FE7082F722E9A8090018190B /* SQLiteHelper.swift in Sources */,
 			);
@@ -744,7 +784,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PVK56R4YSC;
 				INFOPLIST_FILE = "$(SRCROOT)/DemoSignature/Support files/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -763,7 +803,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PVK56R4YSC;
 				INFOPLIST_FILE = "$(SRCROOT)/DemoSignature/Support files/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

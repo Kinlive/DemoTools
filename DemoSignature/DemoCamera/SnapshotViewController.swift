@@ -108,6 +108,13 @@ class SnapshotViewController: UIViewController {
         sqlHelper.delete()
     }
     
+    @IBAction func toMVVMPracticePage(_ sender: Any) {
+        let main = UIStoryboard(storyboard: .Main)
+        
+        let mvvmVC: PracticeMVVMViewController = main.instantiateViewController()
+        present(mvvmVC, animated: true, completion: nil)
+    }
+    
     
     @IBAction func onCameraClicked(_ sender: UIButton) {
         guard UIImagePickerController.isSourceTypeAvailable(.camera) else { return }
