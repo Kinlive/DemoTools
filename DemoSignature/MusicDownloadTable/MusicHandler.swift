@@ -19,6 +19,7 @@ struct MusicHandler: Convertible, DownloadModelProtocol {
     var index: Int
     var indexPath: IndexPath
     var downloaded: Bool
+    var imageUrl: String
     
     /// for multi results
     static func updateSearchResults(_ data: Data, section: Int) -> [MusicHandler]? {
@@ -49,10 +50,11 @@ struct MusicHandler: Convertible, DownloadModelProtocol {
                 let previewURLString = trackDictionary["previewUrl"] as? String,
                 let previewURL = URL(string: previewURLString),
                 let name = trackDictionary["trackName"] as? String,
-                let artist = trackDictionary["artistName"] as? String {
+                let artist = trackDictionary["artistName"] as? String,
+                let imageUrl = trackDictionary["artworkUrl100"] as? String {
                 
                 let indexPath = IndexPath(item: index, section: section)
-                musics.append(MusicHandler(name: name, artist: artist, url: previewURL, index: index, indexPath: indexPath, downloaded: false))
+                musics.append(MusicHandler(name: name, artist: artist, url: previewURL, index: index, indexPath: indexPath, downloaded: false, imageUrl: imageUrl))
                 
                 index += 1
             } else {

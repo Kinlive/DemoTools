@@ -10,6 +10,7 @@
 		FE15F87123557A0700C9BB7E /* PracticeMVVMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE15F87023557A0700C9BB7E /* PracticeMVVMViewController.swift */; };
 		FE15F8792355B43000C9BB7E /* DynamicViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE15F8782355B43000C9BB7E /* DynamicViewModel.swift */; };
 		FE15F87B2355B47000C9BB7E /* DetailCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE15F87A2355B47000C9BB7E /* DetailCellViewModel.swift */; };
+		FE15F8802356AF7300C9BB7E /* AlbumListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE15F87F2356AF7300C9BB7E /* AlbumListCell.swift */; };
 		FE6C4E0522D3272300C8F2B1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6C4E0422D3272300C8F2B1 /* AppDelegate.swift */; };
 		FE6C4E0722D3272300C8F2B1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6C4E0622D3272300C8F2B1 /* ViewController.swift */; };
 		FE6C4E0A22D3272300C8F2B1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FE6C4E0822D3272300C8F2B1 /* Main.storyboard */; };
@@ -49,6 +50,9 @@
 		FE7082F722E9A8090018190B /* SQLiteHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE7082F622E9A8090018190B /* SQLiteHelper.swift */; };
 		FE7082F922EAE6190018190B /* SQLiteColumnCreater.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE7082F822EAE6190018190B /* SQLiteColumnCreater.swift */; };
 		FE7082FB22EE87670018190B /* SQLiteColumnInserter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE7082FA22EE87670018190B /* SQLiteColumnInserter.swift */; };
+		FEA66DAE2356B1A900C83619 /* AlbumListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA66DAD2356B1A900C83619 /* AlbumListViewModel.swift */; };
+		FEA66DB02356B1BE00C83619 /* AlbumListCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA66DAF2356B1BE00C83619 /* AlbumListCellViewModel.swift */; };
+		FEA66DB22356EFA300C83619 /* BindableCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA66DB12356EFA300C83619 /* BindableCore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +76,7 @@
 		FE15F87023557A0700C9BB7E /* PracticeMVVMViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeMVVMViewController.swift; sourceTree = "<group>"; };
 		FE15F8782355B43000C9BB7E /* DynamicViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicViewModel.swift; sourceTree = "<group>"; };
 		FE15F87A2355B47000C9BB7E /* DetailCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCellViewModel.swift; sourceTree = "<group>"; };
+		FE15F87F2356AF7300C9BB7E /* AlbumListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumListCell.swift; sourceTree = "<group>"; };
 		FE6C4E0122D3272300C8F2B1 /* DemoSignature.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DemoSignature.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE6C4E0422D3272300C8F2B1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FE6C4E0622D3272300C8F2B1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -117,6 +122,9 @@
 		FE7082F622E9A8090018190B /* SQLiteHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteHelper.swift; sourceTree = "<group>"; };
 		FE7082F822EAE6190018190B /* SQLiteColumnCreater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteColumnCreater.swift; sourceTree = "<group>"; };
 		FE7082FA22EE87670018190B /* SQLiteColumnInserter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteColumnInserter.swift; sourceTree = "<group>"; };
+		FEA66DAD2356B1A900C83619 /* AlbumListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumListViewModel.swift; sourceTree = "<group>"; };
+		FEA66DAF2356B1BE00C83619 /* AlbumListCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumListCellViewModel.swift; sourceTree = "<group>"; };
+		FEA66DB12356EFA300C83619 /* BindableCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BindableCore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,7 +165,7 @@
 				FE15F87E2356AEC600C9BB7E /* Model */,
 				FE15F87D2356AEC000C9BB7E /* ViewModel */,
 				FE15F87C2356AEBA00C9BB7E /* Views */,
-				FE15F87023557A0700C9BB7E /* PracticeMVVMViewController.swift */,
+				FEA66DB12356EFA300C83619 /* BindableCore.swift */,
 			);
 			path = DemoMVVM;
 			sourceTree = "<group>";
@@ -174,6 +182,8 @@
 		FE15F87C2356AEBA00C9BB7E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				FE15F87023557A0700C9BB7E /* PracticeMVVMViewController.swift */,
+				FE15F87F2356AF7300C9BB7E /* AlbumListCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -181,6 +191,8 @@
 		FE15F87D2356AEC000C9BB7E /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				FEA66DAD2356B1A900C83619 /* AlbumListViewModel.swift */,
+				FEA66DAF2356B1BE00C83619 /* AlbumListCellViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -570,6 +582,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FEA66DB02356B1BE00C83619 /* AlbumListCellViewModel.swift in Sources */,
 				FE7082F222E82E510018190B /* CustomFileManager.swift in Sources */,
 				FE6C4E3722D43F3300C8F2B1 /* SnapshotViewController.swift in Sources */,
 				FE6C4E8122DF218E00C8F2B1 /* DownloadProtocol.swift in Sources */,
@@ -577,6 +590,7 @@
 				FE6C4E4322D6E23B00C8F2B1 /* CustomSwitchCell.swift in Sources */,
 				FE6C4E4122D5DA0900C8F2B1 /* PageViewController.swift in Sources */,
 				FE6C4E3D22D4909100C8F2B1 /* SignatureViewController.swift in Sources */,
+				FE15F8802356AF7300C9BB7E /* AlbumListCell.swift in Sources */,
 				FE6C4E5622DDBCEA00C8F2B1 /* DemoRequestType.swift in Sources */,
 				FE6C4E0722D3272300C8F2B1 /* ViewController.swift in Sources */,
 				FE7082FB22EE87670018190B /* SQLiteColumnInserter.swift in Sources */,
@@ -594,10 +608,12 @@
 				FE6C4E4B22DC2D3E00C8F2B1 /* ListTableViewCell.swift in Sources */,
 				FE6C4E8B22E01B5D00C8F2B1 /* StoryboardSupports.swift in Sources */,
 				FE6C4E3922D444D600C8F2B1 /* Extension+UIViewController.swift in Sources */,
+				FEA66DB22356EFA300C83619 /* BindableCore.swift in Sources */,
 				FE6C4E3322D327ED00C8F2B1 /* SignatureView.swift in Sources */,
 				FE6C4E3F22D5C62F00C8F2B1 /* DynamicViewController.swift in Sources */,
 				FE15F8792355B43000C9BB7E /* DynamicViewModel.swift in Sources */,
 				FE6C4E0522D3272300C8F2B1 /* AppDelegate.swift in Sources */,
+				FEA66DAE2356B1A900C83619 /* AlbumListViewModel.swift in Sources */,
 				FE6C4E3522D432BC00C8F2B1 /* Extension+UIImage.swift in Sources */,
 				FE7082F422E853F70018190B /* ConvertableProtocol.swift in Sources */,
 				FE7082F922EAE6190018190B /* SQLiteColumnCreater.swift in Sources */,
@@ -784,7 +800,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PVK56R4YSC;
 				INFOPLIST_FILE = "$(SRCROOT)/DemoSignature/Support files/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -803,7 +819,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PVK56R4YSC;
 				INFOPLIST_FILE = "$(SRCROOT)/DemoSignature/Support files/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
