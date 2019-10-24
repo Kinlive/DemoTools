@@ -55,6 +55,7 @@
 		FEA66DB22356EFA300C83619 /* BindableCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA66DB12356EFA300C83619 /* BindableCore.swift */; };
 		FEF6346D23604EE7005734E2 /* BaseCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF6346C23604EE7005734E2 /* BaseCollectionViewFlowLayout.swift */; };
 		FEF6346F236140CF005734E2 /* CustomLayout_v1.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF6346E236140CF005734E2 /* CustomLayout_v1.swift */; };
+		FEF63471236152AE005734E2 /* CustomLayout_v2.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF63470236152AE005734E2 /* CustomLayout_v2.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -129,6 +130,7 @@
 		FEA66DB12356EFA300C83619 /* BindableCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BindableCore.swift; sourceTree = "<group>"; };
 		FEF6346C23604EE7005734E2 /* BaseCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		FEF6346E236140CF005734E2 /* CustomLayout_v1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLayout_v1.swift; sourceTree = "<group>"; };
+		FEF63470236152AE005734E2 /* CustomLayout_v2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLayout_v2.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,6 +192,7 @@
 				FE15F87F2356AF7300C9BB7E /* AlbumListCell.swift */,
 				FEF6346C23604EE7005734E2 /* BaseCollectionViewFlowLayout.swift */,
 				FEF6346E236140CF005734E2 /* CustomLayout_v1.swift */,
+				FEF63470236152AE005734E2 /* CustomLayout_v2.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -620,6 +623,7 @@
 				FE6C4E3F22D5C62F00C8F2B1 /* DynamicViewController.swift in Sources */,
 				FE15F8792355B43000C9BB7E /* DynamicViewModel.swift in Sources */,
 				FE6C4E0522D3272300C8F2B1 /* AppDelegate.swift in Sources */,
+				FEF63471236152AE005734E2 /* CustomLayout_v2.swift in Sources */,
 				FEA66DAE2356B1A900C83619 /* AlbumListViewModel.swift in Sources */,
 				FE6C4E3522D432BC00C8F2B1 /* Extension+UIImage.swift in Sources */,
 				FE7082F422E853F70018190B /* ConvertableProtocol.swift in Sources */,

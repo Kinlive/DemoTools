@@ -27,6 +27,7 @@ class BaseCollectionViewFlowLayout: UICollectionViewFlowLayout {
     }
     
     override func prepare() {
+        
         layoutMap.removeAll()
         columnsYoffset = Array(repeating: 0, count: totalColumns)
         totalItemsInSection = collectionView!.numberOfItems(inSection: 0)
