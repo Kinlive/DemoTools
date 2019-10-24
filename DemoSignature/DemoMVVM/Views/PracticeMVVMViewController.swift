@@ -16,6 +16,11 @@ class PracticeMVVMViewController: UIViewController {
     lazy var viewModel: AlbumListViewModel = {
         return AlbumListViewModel(delegate: self)
     }()
+    lazy var layout: CustomLayout_v1 = {
+        let newLayout = CustomLayout_v1()
+        newLayout.scrollDirection = .vertical
+        return newLayout
+    }()
     
     let searchText = Observable<String>()
     
@@ -26,7 +31,8 @@ class PracticeMVVMViewController: UIViewController {
     }
     
     func initViews() {
-        albumListCollectionView.delegate = self
+//        albumListCollectionView.delegate = self
+        albumListCollectionView.collectionViewLayout = layout
         albumListCollectionView.dataSource = self
         musicSearchBar.delegate = self
     }
@@ -35,9 +41,9 @@ class PracticeMVVMViewController: UIViewController {
 
 
 // MARKL: - UICollectionView delegate
-extension PracticeMVVMViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension PracticeMVVMViewController: UICollectionViewDataSource {//}, UICollectionViewDelegateFlowLayout {
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    /*func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let screenWidth = collectionView.frame.width - 2
         let height = collectionView.bounds.height * 0.3
         let size = CGSize(width: screenWidth, height: height)
@@ -50,7 +56,7 @@ extension PracticeMVVMViewController: UICollectionViewDataSource, UICollectionVi
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 1
-    }
+    }*/
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.output.albumListCellViewModels.count

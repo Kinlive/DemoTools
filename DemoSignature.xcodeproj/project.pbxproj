@@ -53,6 +53,8 @@
 		FEA66DAE2356B1A900C83619 /* AlbumListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA66DAD2356B1A900C83619 /* AlbumListViewModel.swift */; };
 		FEA66DB02356B1BE00C83619 /* AlbumListCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA66DAF2356B1BE00C83619 /* AlbumListCellViewModel.swift */; };
 		FEA66DB22356EFA300C83619 /* BindableCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEA66DB12356EFA300C83619 /* BindableCore.swift */; };
+		FEF6346D23604EE7005734E2 /* BaseCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF6346C23604EE7005734E2 /* BaseCollectionViewFlowLayout.swift */; };
+		FEF6346F236140CF005734E2 /* CustomLayout_v1.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF6346E236140CF005734E2 /* CustomLayout_v1.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -125,6 +127,8 @@
 		FEA66DAD2356B1A900C83619 /* AlbumListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumListViewModel.swift; sourceTree = "<group>"; };
 		FEA66DAF2356B1BE00C83619 /* AlbumListCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumListCellViewModel.swift; sourceTree = "<group>"; };
 		FEA66DB12356EFA300C83619 /* BindableCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BindableCore.swift; sourceTree = "<group>"; };
+		FEF6346C23604EE7005734E2 /* BaseCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
+		FEF6346E236140CF005734E2 /* CustomLayout_v1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLayout_v1.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,6 +188,8 @@
 			children = (
 				FE15F87023557A0700C9BB7E /* PracticeMVVMViewController.swift */,
 				FE15F87F2356AF7300C9BB7E /* AlbumListCell.swift */,
+				FEF6346C23604EE7005734E2 /* BaseCollectionViewFlowLayout.swift */,
+				FEF6346E236140CF005734E2 /* CustomLayout_v1.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -588,6 +594,7 @@
 				FE6C4E8122DF218E00C8F2B1 /* DownloadProtocol.swift in Sources */,
 				FE6C4E4D22DC570A00C8F2B1 /* RequestCommunicator.swift in Sources */,
 				FE6C4E4322D6E23B00C8F2B1 /* CustomSwitchCell.swift in Sources */,
+				FEF6346F236140CF005734E2 /* CustomLayout_v1.swift in Sources */,
 				FE6C4E4122D5DA0900C8F2B1 /* PageViewController.swift in Sources */,
 				FE6C4E3D22D4909100C8F2B1 /* SignatureViewController.swift in Sources */,
 				FE15F8802356AF7300C9BB7E /* AlbumListCell.swift in Sources */,
@@ -616,6 +623,7 @@
 				FEA66DAE2356B1A900C83619 /* AlbumListViewModel.swift in Sources */,
 				FE6C4E3522D432BC00C8F2B1 /* Extension+UIImage.swift in Sources */,
 				FE7082F422E853F70018190B /* ConvertableProtocol.swift in Sources */,
+				FEF6346D23604EE7005734E2 /* BaseCollectionViewFlowLayout.swift in Sources */,
 				FE7082F922EAE6190018190B /* SQLiteColumnCreater.swift in Sources */,
 				FE6C4E5322DDA46D00C8F2B1 /* HTTPStatusCodes.swift in Sources */,
 				FE6C4E8322DF227000C8F2B1 /* Download.swift in Sources */,
