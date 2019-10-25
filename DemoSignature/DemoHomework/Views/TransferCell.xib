@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="65" id="KGk-i7-Jjw" customClass="TransferCell" customModule="DemoSignature" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="324" height="65"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="324" height="65"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icFriendsStar" translatesAutoresizingMaskIntoConstraints="NO" id="Oil-kw-rko">
+                        <rect key="frame" x="5" y="22.5" width="15" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="15" id="BaM-cp-kKU"/>
+                            <constraint firstAttribute="width" constant="15" id="l4c-PP-qWl"/>
+                        </constraints>
+                    </imageView>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8XC-io-q25">
+                        <rect key="frame" x="30" y="10" width="40" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="40" id="oJc-Gg-Qvm"/>
+                            <constraint firstAttribute="height" constant="40" id="ue7-qZ-Xu7"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uOY-WG-jnr">
+                        <rect key="frame" x="90" y="19.5" width="45" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T4g-xw-N7d">
+                        <rect key="frame" x="234" y="16" width="40" height="28"/>
+                        <constraints>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" priority="999" constant="40" id="PVe-YQ-vGi"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <state key="normal" title="轉帳">
+                            <color key="titleColor" red="0.92156862745098034" green="0.0" blue="0.5490196078431373" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        </state>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Vm-mj-Vwj">
+                        <rect key="frame" x="294" y="20" width="20" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="20" id="2hU-CU-ffc"/>
+                            <constraint firstAttribute="height" constant="20" id="TJA-gx-6sB"/>
+                        </constraints>
+                        <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <state key="normal" image="ellipsis" catalog="system">
+                            <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </state>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="8XC-io-q25" secondAttribute="bottom" constant="10" id="4eN-w0-yCX"/>
+                    <constraint firstItem="Oil-kw-rko" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="6JX-VA-0O8"/>
+                    <constraint firstItem="8XC-io-q25" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="HBU-3r-Toq"/>
+                    <constraint firstItem="uOY-WG-jnr" firstAttribute="centerY" secondItem="8XC-io-q25" secondAttribute="centerY" id="KBG-L2-BxW"/>
+                    <constraint firstItem="Oil-kw-rko" firstAttribute="centerY" secondItem="8XC-io-q25" secondAttribute="centerY" id="Lg6-uj-Eqn"/>
+                    <constraint firstItem="7Vm-mj-Vwj" firstAttribute="centerY" secondItem="8XC-io-q25" secondAttribute="centerY" id="NVg-P6-JUU"/>
+                    <constraint firstAttribute="trailing" secondItem="7Vm-mj-Vwj" secondAttribute="trailing" constant="10" id="njs-sk-CGS"/>
+                    <constraint firstItem="8XC-io-q25" firstAttribute="leading" secondItem="Oil-kw-rko" secondAttribute="trailing" constant="10" id="oPB-P7-1gH"/>
+                    <constraint firstItem="T4g-xw-N7d" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="uOY-WG-jnr" secondAttribute="trailing" constant="20" id="wOL-kK-Xu4"/>
+                    <constraint firstItem="uOY-WG-jnr" firstAttribute="leading" secondItem="8XC-io-q25" secondAttribute="trailing" constant="20" id="xCR-xs-diX"/>
+                    <constraint firstItem="T4g-xw-N7d" firstAttribute="centerY" secondItem="8XC-io-q25" secondAttribute="centerY" id="yny-EO-Rrg"/>
+                    <constraint firstItem="7Vm-mj-Vwj" firstAttribute="leading" secondItem="T4g-xw-N7d" secondAttribute="trailing" constant="20" id="yrg-a5-txr"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="moreButton" destination="7Vm-mj-Vwj" id="FhZ-Wh-o9z"/>
+                <outlet property="moreButtonWidthConstraint" destination="2hU-CU-ffc" id="y9b-cF-fvH"/>
+                <outlet property="nameLabel" destination="uOY-WG-jnr" id="RCi-eg-jiY"/>
+                <outlet property="photoImageView" destination="8XC-io-q25" id="Epw-0L-fvg"/>
+                <outlet property="starImageView" destination="Oil-kw-rko" id="UVK-94-8D8"/>
+                <outlet property="transferButton" destination="T4g-xw-N7d" id="kKV-YH-Sn5"/>
+                <outlet property="transferButtonWidthConstraint" destination="PVe-YQ-vGi" id="JpU-RI-dbH"/>
+            </connections>
+            <point key="canvasLocation" x="128.98550724637681" y="148.32589285714286"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="ellipsis" catalog="system" width="64" height="20"/>
+        <image name="icFriendsStar" width="14" height="14"/>
+    </resources>
+</document>

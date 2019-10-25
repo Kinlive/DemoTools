@@ -56,6 +56,11 @@
 		FEF6346D23604EE7005734E2 /* BaseCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF6346C23604EE7005734E2 /* BaseCollectionViewFlowLayout.swift */; };
 		FEF6346F236140CF005734E2 /* CustomLayout_v1.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF6346E236140CF005734E2 /* CustomLayout_v1.swift */; };
 		FEF63471236152AE005734E2 /* CustomLayout_v2.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF63470236152AE005734E2 /* CustomLayout_v2.swift */; };
+		FEF634742362CC0F005734E2 /* HomeworkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF634732362CC0F005734E2 /* HomeworkViewController.swift */; };
+		FEF634782362EC35005734E2 /* InviteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF634762362EC35005734E2 /* InviteCell.swift */; };
+		FEF634792362EC35005734E2 /* InviteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEF634772362EC35005734E2 /* InviteCell.xib */; };
+		FEF6347C2362EC46005734E2 /* TransferCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF6347A2362EC46005734E2 /* TransferCell.swift */; };
+		FEF6347D2362EC46005734E2 /* TransferCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEF6347B2362EC46005734E2 /* TransferCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -131,6 +136,11 @@
 		FEF6346C23604EE7005734E2 /* BaseCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		FEF6346E236140CF005734E2 /* CustomLayout_v1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLayout_v1.swift; sourceTree = "<group>"; };
 		FEF63470236152AE005734E2 /* CustomLayout_v2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLayout_v2.swift; sourceTree = "<group>"; };
+		FEF634732362CC0F005734E2 /* HomeworkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeworkViewController.swift; sourceTree = "<group>"; };
+		FEF634762362EC35005734E2 /* InviteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteCell.swift; sourceTree = "<group>"; };
+		FEF634772362EC35005734E2 /* InviteCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InviteCell.xib; sourceTree = "<group>"; };
+		FEF6347A2362EC46005734E2 /* TransferCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferCell.swift; sourceTree = "<group>"; };
+		FEF6347B2362EC46005734E2 /* TransferCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TransferCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -237,6 +247,7 @@
 		FE6C4E0322D3272300C8F2B1 /* DemoSignature */ = {
 			isa = PBXGroup;
 			children = (
+				FEF634722362CBE7005734E2 /* DemoHomework */,
 				FE15F86F235579E500C9BB7E /* DemoMVVM */,
 				FE7082F522E9A7DB0018190B /* DataBase */,
 				FE7082ED22E7ED970018190B /* DemoRequestApi */,
@@ -403,6 +414,26 @@
 			path = DataBase;
 			sourceTree = "<group>";
 		};
+		FEF634722362CBE7005734E2 /* DemoHomework */ = {
+			isa = PBXGroup;
+			children = (
+				FEF634752362EC0F005734E2 /* Views */,
+				FEF634732362CC0F005734E2 /* HomeworkViewController.swift */,
+			);
+			path = DemoHomework;
+			sourceTree = "<group>";
+		};
+		FEF634752362EC0F005734E2 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FEF634762362EC35005734E2 /* InviteCell.swift */,
+				FEF634772362EC35005734E2 /* InviteCell.xib */,
+				FEF6347A2362EC46005734E2 /* TransferCell.swift */,
+				FEF6347B2362EC46005734E2 /* TransferCell.xib */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -519,7 +550,9 @@
 			files = (
 				FE6C4E0F22D3272500C8F2B1 /* LaunchScreen.storyboard in Resources */,
 				FE6C4E0C22D3272500C8F2B1 /* Assets.xcassets in Resources */,
+				FEF634792362EC35005734E2 /* InviteCell.xib in Resources */,
 				FE6C4E0A22D3272300C8F2B1 /* Main.storyboard in Resources */,
+				FEF6347D2362EC46005734E2 /* TransferCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -607,6 +640,7 @@
 				FE6C4E5122DC7C3700C8F2B1 /* RequestTasks.swift in Sources */,
 				FE7082F022E7EF0D0018190B /* ResponseViewController.swift in Sources */,
 				FE6C4E5822DECC5100C8F2B1 /* CommunicatorResponse.swift in Sources */,
+				FEF634782362EC35005734E2 /* InviteCell.swift in Sources */,
 				FE6C4E5A22DECCA100C8F2B1 /* CommunicatorEnums.swift in Sources */,
 				FE6C4E8E22E075C000C8F2B1 /* DetailCell.swift in Sources */,
 				FE6C4E4F22DC7B2E00C8F2B1 /* RequestBaseType.swift in Sources */,
@@ -614,9 +648,11 @@
 				FE6C4E4822DC2B4900C8F2B1 /* TestCallApiViewController.swift in Sources */,
 				FE15F87123557A0700C9BB7E /* PracticeMVVMViewController.swift in Sources */,
 				FE6C4E9122E162E400C8F2B1 /* Streams.swift in Sources */,
+				FEF634742362CC0F005734E2 /* HomeworkViewController.swift in Sources */,
 				FE6C4E8522DFFE1800C8F2B1 /* MusicHandler.swift in Sources */,
 				FE6C4E4B22DC2D3E00C8F2B1 /* ListTableViewCell.swift in Sources */,
 				FE6C4E8B22E01B5D00C8F2B1 /* StoryboardSupports.swift in Sources */,
+				FEF6347C2362EC46005734E2 /* TransferCell.swift in Sources */,
 				FE6C4E3922D444D600C8F2B1 /* Extension+UIViewController.swift in Sources */,
 				FEA66DB22356EFA300C83619 /* BindableCore.swift in Sources */,
 				FE6C4E3322D327ED00C8F2B1 /* SignatureView.swift in Sources */,

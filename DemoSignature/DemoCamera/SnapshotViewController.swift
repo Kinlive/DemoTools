@@ -116,6 +116,13 @@ class SnapshotViewController: UIViewController {
         present(mvvmVC, animated: true, completion: nil)
     }
     
+    @IBAction func toHomeworkPage(_ sender: Any) {
+        let homeworkVC: HomeworkViewController = UIStoryboard(storyboard: .Main).instantiateViewController()
+        homeworkVC.modalPresentationStyle = .fullScreen
+        present(homeworkVC, animated: true, completion: nil)
+    }
+    
+    
     
     @IBAction func onCameraClicked(_ sender: UIButton) {
         guard UIImagePickerController.isSourceTypeAvailable(.camera) else { return }

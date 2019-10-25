@@ -16,11 +16,17 @@ class PracticeMVVMViewController: UIViewController {
     lazy var viewModel: AlbumListViewModel = {
         return AlbumListViewModel(delegate: self)
     }()
-    lazy var layout: CustomLayout_v2 = {
-        let newLayout = CustomLayout_v2()
+    lazy var layout: CustomLayout_v1 = {
+        let newLayout = CustomLayout_v1()
         newLayout.scrollDirection = .vertical
         return newLayout
     }()
+    
+    /*lazy var layout: CustomLayout_v2 = {
+       let newLayout = CustomLayout_v2()
+        newLayout.scrollDirection = .vertical
+        return newLayout
+    }()*/
     
     let searchText = Observable<String>()
     
