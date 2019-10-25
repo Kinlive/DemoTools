@@ -31,8 +31,10 @@ class PracticeMVVMViewController: UIViewController {
     }
     
     func initViews() {
-//        albumListCollectionView.delegate = self
+        albumListCollectionView.delegate = self
+        albumListCollectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         albumListCollectionView.collectionViewLayout = layout
+        
         albumListCollectionView.dataSource = self
         musicSearchBar.delegate = self
     }
@@ -41,7 +43,7 @@ class PracticeMVVMViewController: UIViewController {
 
 
 // MARKL: - UICollectionView delegate
-extension PracticeMVVMViewController: UICollectionViewDataSource {//}, UICollectionViewDelegateFlowLayout {
+extension PracticeMVVMViewController: UICollectionViewDataSource, UICollectionViewDelegate {//}, UICollectionViewDelegateFlowLayout {
     
     /*func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let screenWidth = collectionView.frame.width - 2

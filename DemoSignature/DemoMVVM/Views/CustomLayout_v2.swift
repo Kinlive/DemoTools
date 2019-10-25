@@ -14,8 +14,11 @@ class CustomLayout_v2: BaseCollectionViewFlowLayout {
     private var firstItemHeight: CGFloat {//= 100// (200 * scale)
         return 200 * bodyScale
     }
+    private var originalWidth: CGFloat {
+        return collectionView!.bounds.width - contentInsets.left - contentInsets.right
+    }
     // width height scale
-    private let bodyScale: CGFloat = 0.5
+    private let bodyScale: CGFloat = 0.7
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -29,7 +32,7 @@ class CustomLayout_v2: BaseCollectionViewFlowLayout {
 
     // MARK: - Override methods.
     override func calculateItemSize() {
-        let contentWidthWithoutIndent = (collectionView!.bounds.width - contentInsets.left - contentInsets.right) * bodyScale
+        let contentWidthWithoutIndent = originalWidth * bodyScale
         
         _itemSize = CGSize(width: contentWidthWithoutIndent, height: firstItemHeight)
     }
@@ -51,7 +54,7 @@ class CustomLayout_v2: BaseCollectionViewFlowLayout {
         return rect*/
         
         return CGRect(x: (collectionView!.bounds.width - _itemSize.width) * 0.5,
-                      y: columnYoffset + firstItemHeight * 0.5,
+                      y: columnYoffset, //+ firstItemHeight * 0.5,
                       width: _itemSize.width,
                       height: _itemSize.height)
     }
@@ -73,63 +76,74 @@ class CustomLayout_v2: BaseCollectionViewFlowLayout {
         
         let height = firstItemHeight
         let offsetY = collectionView.contentOffset.y
-        let itemY = attributes.center.y - offsetY
-        let positionY = (itemY - height * bodyScale) / height
+        // calculate distance between the attribute.minY and scroll contents current offsets
+        let itemDistanceY = attributes.center.y - height * 0.5 - offsetY
+        // distance / height
+        let positionY = itemDistanceY / height
         let contentView = collectionView.cellForItem(at: attributes.indexPath)
+        
+        // set to front
+        attributes.zIndex = totalItemsInSection - attributes.indexPath.row
         
         /*printLog(logs: [
             "offsetY: \(offsetY)",
-            "itemY: \(itemY)",
+            "itemY: \(itemDistanceY)",
+            "center.y: \(attributes.center.y)",
             "positionY: \(positionY)"
-        ], title: "addParallaxAttributes at \(attributes.indexPath)")
-        */
+        ], title: "addParallaxAttributes at \(attributes.indexPath)")*/
         
-        if positionY > 1 { // 不是第一個的時候
-            let scaleCheck = positionY - 1
-            let scale: CGFloat = scaleCheck > 1 ? 0 : (1 - scaleCheck)
-            let translate: CGFloat = scaleCheck > 1 ? height * (1 - scaleCheck) : 0
+        
+        let startTransformPoint: CGFloat = 1.5
+        
+        guard offsetY != 0 else {
+            if  positionY <= 0, attributes.indexPath.row == 0 { // 第一個item 在初始畫面完成時的狀態
+                let scale = 1 / bodyScale
+                contentView?.transform = CGAffineTransform(scaleX: scale, y: scale)
+                
+            } else {
+                
+                //let scaleCheck = abs(startTransformPoint - positionY)
+                //var translateY_v3: CGFloat = (scaleCheck) * height
+                
+                let transY = height / (1 / bodyScale)
+                contentView?.transform = CGAffineTransform(translationX: 0, y: transY).scaledBy(x: 1, y: 1)
+            }
             
-            // old y:  -(height * 0.25)
-            contentView?.transform = CGAffineTransform(translationX: 0, y: 0).scaledBy(x: 1 + scale, y: 1 + scale)
+            return attributes
+        }
+        
+        if positionY > startTransformPoint { // 不是第一個的時候
+            let scale: CGFloat = 1
+            
+            contentView?.transform = CGAffineTransform(translationX: 0, y: 0).scaledBy(x: scale, y: scale)
             
         } else {
-            let scaleCheck = 1 + positionY
-            let scale = scaleCheck <= 1 / bodyScale ? scaleCheck : 1 / bodyScale
+            let scaleCheck = abs(startTransformPoint - positionY)
+            var scale: CGFloat = 0
+            
+            var translateY_v3: CGFloat = -(scaleCheck) * height
+            
+            // scale ok!
+            if (scaleCheck + 1) > 1 / bodyScale { // : 1 / bodyScale 還原倍率貼齊螢幕寬
+                scale = 1 / bodyScale
+                
+            } else {
+                scale = scaleCheck + 1
+            }
+            
+            if attributes.center.y - height * scale * 0.5 < -1.0 { // ok
+                translateY_v3 = 0
+            }
             
             /** animation translat will reverse 0.5 and scroll to top */
-            let translateY_v1 = height * (1 - positionY)
-            
-            contentView?.transform = CGAffineTransform(scaleX: scale, y: scale).translatedBy(x: 0, y: translateY_v1)
+            //let translateY_v1 = height * (1 - positionY)
+            //let translateY_v2 = -(height * abs(startTransformPoint - positionY)) // ok!
+         
+            contentView?.transform = CGAffineTransform(scaleX: scale, y: scale).translatedBy(x: 0, y: translateY_v3)
             
         }
         
         return attributes
-        
     }
-    
-    /*private func itemHeigt(at indexPath: IndexPath) -> CGSize {
-        var itemHeight = _itemSize.height * (1 - CGFloat(indexPath.item) / CGFloat(totalItemsInSection - 1))
-        var itemWidth = _itemSize.width * (1 - CGFloat(indexPath.item) / CGFloat(totalItemsInSection - 1))
-        
-        if itemHeight < 100 {
-            itemHeight = 100
-        }
-        
-        if itemWidth < collectionView!.bounds.width * 0.6 {
-            itemWidth = collectionView!.bounds.width * 0.6
-        }
-        
-        return CGSize(width: itemWidth, height: itemHeight)
-    }
-    
-    private func itemPositionY(at indexPath: IndexPath, with size: CGSize) -> CGFloat {
-        let y = CGFloat(indexPath.item) * (firstItemHeight - size.height)
-        
-        return y
-    }
-    private func itemPositionX(with size: CGSize) -> CGFloat {
-        
-        return (_itemSize.width - size.width) * 0.5
-    }*/
     
 }

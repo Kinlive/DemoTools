@@ -112,7 +112,7 @@ class SnapshotViewController: UIViewController {
         let main = UIStoryboard(storyboard: .Main)
         
         let mvvmVC: PracticeMVVMViewController = main.instantiateViewController()
-//        mvvmVC.modalPresentationStyle = .fullScreen
+        mvvmVC.modalPresentationStyle = .fullScreen
         present(mvvmVC, animated: true, completion: nil)
     }
     
