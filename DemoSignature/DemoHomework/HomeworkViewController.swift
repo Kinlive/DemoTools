@@ -8,6 +8,8 @@
 
 import UIKit
 
+private let footerViewHeight: CGFloat = 100
+
 class HomeworkViewController: UIViewController {
 
     @IBOutlet weak var topViewHeightConstraint: NSLayoutConstraint!
@@ -31,6 +33,10 @@ class HomeworkViewController: UIViewController {
     
     @IBOutlet weak var friendsCountLabel: UILabel!
     
+    private var inviteFooterView: UIView!
+    
+    private var isCollapseInvites: Bool = true
+    
     lazy var viewModel: HomeworkViewModel = {
        return HomeworkViewModel(delegate: self)
     }()
@@ -46,7 +52,7 @@ class HomeworkViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        handleScrollViewContents()
+        handleScrollViewContents(with: 1)
     }
     
     private func initViews() {
@@ -89,13 +95,13 @@ class HomeworkViewController: UIViewController {
     // TODO: - 2. remove inviteItem when action and move front with next one.
     
     
-    func handleScrollViewContents() {
+    func handleScrollViewContents(with inviteCellsCount: CGFloat = 10) {
         
         // handel invite table
         let cellHeight: CGFloat = 60
-        let cellCounts: CGFloat = 10
+
         // inviteTableView的高度，隨著model的counts
-        let adjustHeight = cellHeight * cellCounts
+        let adjustHeight = cellHeight * inviteCellsCount + footerViewHeight
         // 手動更新其高度
         inviteHeightConstraint.constant = adjustHeight
     
@@ -124,6 +130,55 @@ class HomeworkViewController: UIViewController {
     
     }
     
+    
+    private func setupFooterView() -> UIView {
+        if inviteFooterView == nil {
+            inviteFooterView = UIView(frame: .zero)
+            let btn = UIButton(frame: .zero)
+            inviteFooterView.addSubview(btn)
+            btn.translatesAutoresizingMaskIntoConstraints = false
+            btn.centerYAnchor.constraint(equalToSystemSpacingBelow: inviteFooterView.centerYAnchor, multiplier: 1).isActive = true
+            btn.centerXAnchor.constraint(equalTo: inviteFooterView.centerXAnchor).isActive = true
+            btn.widthAnchor.constraint(equalToConstant: 200).isActive = true
+            btn.heightAnchor.constraint(equalToConstant: footerViewHeight).isActive = true
+            btn.backgroundColor = .red
+            btn.setTitle("點即展開/收起", for: .normal)
+            btn.addTarget(self, action: #selector(whenCollapseButtonTapped), for: .touchUpInside)
+            btn.layer.cornerRadius = footerViewHeight * 0.5
+            btn.layer.masksToBounds = true
+            btn.layer.borderWidth = 2
+            btn.layer.borderColor = UIColor.white.cgColor
+            btn.layer.shadowRadius = 3
+            btn.layer.shadowColor = UIColor.red.cgColor
+            btn.layer.shadowOffset = .init(width: 1, height: 1)
+        }
+        
+        return inviteFooterView
+    }
+    
+    @objc
+    private func whenCollapseButtonTapped() {
+        isCollapseInvites = !isCollapseInvites
+        
+        var indexPaths: [IndexPath] = []
+        for i in 1 ..< 10 {
+            indexPaths.append(IndexPath(item: i, section: 0))
+        }
+        
+        // adjust scrollViews contentSize and baseViews height
+        handleScrollViewContents(with: isCollapseInvites ? 1 : 10)
+        
+        inviteTableView.beginUpdates()
+        if isCollapseInvites {
+            inviteTableView.deleteRows(at: indexPaths, with: .fade)
+        } else {
+            inviteTableView.insertRows(at: indexPaths, with: .fade)
+        }
+        inviteTableView.endUpdates()
+        
+        
+        
+    }
 }
 
 extension HomeworkViewController: UIScrollViewDelegate {
@@ -138,6 +193,7 @@ extension HomeworkViewController: UIScrollViewDelegate {
             if yOffset >= searchBaseViewMinY {
                 transferTableView.isScrollEnabled = true
                 listScrollView.isScrollEnabled = false
+                
             }
         }
         
@@ -146,6 +202,7 @@ extension HomeworkViewController: UIScrollViewDelegate {
             if yOffset <= 0 {
                 self.listScrollView.isScrollEnabled = true
                 transferTableView.isScrollEnabled = false
+            
             }
         }
     }
@@ -163,7 +220,7 @@ extension HomeworkViewController: UITableViewDelegate, UITableViewDataSource {
         var rows = 0
         
         if tableView === inviteTableView {
-            rows = 10
+            rows = isCollapseInvites ? 1 : 10
         } else if tableView === transferTableView {
             rows = 20
         }
@@ -188,13 +245,24 @@ extension HomeworkViewController: UITableViewDelegate, UITableViewDataSource {
         
         return UITableViewCell()
     }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        guard tableView === inviteTableView else { return nil }
+        
+        return setupFooterView()
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        guard tableView === inviteTableView else { return 0 }
+        return footerViewHeight
+    }
 }
 
 
 extension HomeworkViewController: HomeworkViewModelDelegate {
     func binding(to input: HomeworkViewModel.Input) {
         input.friendsCounts.binding { (count) in
-           self.friendsCountLabel.text = "好友列表 \(count)"
+            self.friendsCountLabel.text = "好友列表 \(String(describing: count))"
         }
         
     }
