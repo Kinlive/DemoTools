@@ -48,20 +48,15 @@ class HomeworkViewController: UIViewController {
         super.viewWillAppear(animated)
         handleScrollViewContents()
     }
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(animated)
-//
-//        handleScrollViewContents()
-//    }
     
     private func initViews() {
-        
+        /* 在scrollView上放入tableView時需要先將其scroll enable關閉 */
         inviteTableView.isScrollEnabled = false
         transferTableView.isScrollEnabled = false
         listScrollView.delegate = self
         listScrollView.bounces = false
         //inviteTableView.bounces = true
-        
+//        transferTableView.bounces = false
         
         inviteTableView.register(UINib(nibName: InviteCell.storyboardIdentifier, bundle: nil), forCellReuseIdentifier: InviteCell.storyboardIdentifier)
          transferTableView.register(UINib(nibName: TransferCell.storyboardIdentifier, bundle: nil), forCellReuseIdentifier: TransferCell.storyboardIdentifier)
@@ -93,23 +88,38 @@ class HomeworkViewController: UIViewController {
     // TODO: - 1. handle animation when accept/inaccept friends invite action.
     // TODO: - 2. remove inviteItem when action and move front with next one.
     
+    
     func handleScrollViewContents() {
         
         // handel invite table
         let cellHeight: CGFloat = 60
         let cellCounts: CGFloat = 10
-        
+        // inviteTableView的高度，隨著model的counts
         let adjustHeight = cellHeight * cellCounts
-        
+        // 手動更新其高度
         inviteHeightConstraint.constant = adjustHeight
     
-        let transferCellsHeight = cellHeight * 20
-        //transferHeightConstraint.constant = transferCellsHeight
+        /* case 1
+         因此例子用途為滾動到searchBar時要能置頂於上方，且能讓transferTableView繼續滾動，
+         因此先取得 transferTableView扣除 search欄位高度後於畫面全部呈現的高度，以作為scrollView contentSize.height參考。
+         */
+        let transfersHeight = listScrollView.frame.height - searchBaseView.frame.height
         
+        /* case 2
+        若是毋須將search置頂，則同inviteTableView計算model數量的高度直接賦予給
+         scrollView.contentSize.height即可。
+         */
+        
+        // It's suggest that do not setup contentSize in the viewDidLoad override function.
         listScrollView.contentSize = CGSize(
         width: listScrollView.frame.width,
-        height: adjustHeight + transferCellsHeight + searchBaseView.frame.height)
+        height: adjustHeight + transfersHeight + searchBaseView.frame.height)
         
+        // 給予高度時若stackView一定要有spacing時也要將其算入，以及scrollView底下subviews的top/bottom constant.
+        /*
+         因baseView的constraints top&bottom約束在scrollView的 top&bottom，所以其高度跟隨scrollView.contentSize.height。
+         另外需要注意的是 baseView 的bottom constraint在 storyboard上是對齊scrollView.Content Layout guide的bottom。
+         */
         baseViewHeightConstraint.constant = listScrollView.contentSize.height
     
     }
@@ -119,11 +129,12 @@ class HomeworkViewController: UIViewController {
 extension HomeworkViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
-        /*let yOffset = scrollView.contentOffset.y
+        let yOffset = scrollView.contentOffset.y
         let searchBaseViewMinY = searchBaseView.frame.origin.y
         
         if scrollView === self.listScrollView {
-            
+            // 當base的scrollView位移高度超過搜尋的上緣時，切換scroll權給下方的tableView使其可滾動。
+            // 特別注意的點， 若是僅設置 > searchBaseViewMinY，有可能下方判斷回滾的永遠無法觸發 <= 0而造成無法切換滾動權給 base scrollView
             if yOffset >= searchBaseViewMinY {
                 transferTableView.isScrollEnabled = true
                 listScrollView.isScrollEnabled = false
@@ -131,14 +142,12 @@ extension HomeworkViewController: UIScrollViewDelegate {
         }
         
         if scrollView === self.transferTableView {
-            
-            if yOffset < transferTableView.frame.origin.y {
+            // 當下方的tableView 做回滾動至位移為0時即，即是滾至上緣起點，若要繼續往上滾動則將滾動權設為base的scrollView
+            if yOffset <= 0 {
                 self.listScrollView.isScrollEnabled = true
                 transferTableView.isScrollEnabled = false
             }
-            
-            printLog(logs: ["Did scroll on transfer tableview"], title: "Test")
-        }*/
+        }
     }
 }
 

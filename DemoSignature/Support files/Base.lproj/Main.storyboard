@@ -398,7 +398,7 @@
                                     <constraint firstAttribute="trailing" secondItem="fT2-Ph-V7w" secondAttribute="trailing" constant="20" id="qof-bz-dfa"/>
                                 </constraints>
                             </view>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g9y-Sl-T4K">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g9y-Sl-T4K">
                                 <rect key="frame" x="0.0" y="164" width="414" height="668"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vgQ-fJ-F8D" userLabel="baseView">
@@ -450,7 +450,7 @@
                                                             <constraint firstItem="Ggw-bc-8on" firstAttribute="leading" secondItem="JoS-9T-rU2" secondAttribute="leading" constant="10" id="zh9-KA-QT7"/>
                                                         </constraints>
                                                     </view>
-                                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="PBh-Fx-sfT">
+                                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="PBh-Fx-sfT">
                                                         <rect key="frame" x="0.0" y="300" width="354" height="398"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                         <constraints>
