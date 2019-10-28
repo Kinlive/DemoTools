@@ -30,7 +30,9 @@ class Observable<T> {
     /// pass new value to trigger changed
     func onNext(_ value: T? = nil) {
         self.value = value
-        valueChanged?(value)
+        DispatchQueue.main.async {
+            self.valueChanged?(value)
+        }
     }
     
     // test for array values

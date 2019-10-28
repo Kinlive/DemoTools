@@ -61,6 +61,9 @@
 		FEF634792362EC35005734E2 /* InviteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEF634772362EC35005734E2 /* InviteCell.xib */; };
 		FEF6347C2362EC46005734E2 /* TransferCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF6347A2362EC46005734E2 /* TransferCell.swift */; };
 		FEF6347D2362EC46005734E2 /* TransferCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEF6347B2362EC46005734E2 /* TransferCell.xib */; };
+		FEF63481236675CA005734E2 /* HomeworkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF63480236675CA005734E2 /* HomeworkViewModel.swift */; };
+		FEF63483236675EF005734E2 /* InviteCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF63482236675EF005734E2 /* InviteCellViewModel.swift */; };
+		FEF63485236675FF005734E2 /* TransferCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF63484236675FF005734E2 /* TransferCellViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -141,6 +144,9 @@
 		FEF634772362EC35005734E2 /* InviteCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InviteCell.xib; sourceTree = "<group>"; };
 		FEF6347A2362EC46005734E2 /* TransferCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferCell.swift; sourceTree = "<group>"; };
 		FEF6347B2362EC46005734E2 /* TransferCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TransferCell.xib; sourceTree = "<group>"; };
+		FEF63480236675CA005734E2 /* HomeworkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeworkViewModel.swift; sourceTree = "<group>"; };
+		FEF63482236675EF005734E2 /* InviteCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteCellViewModel.swift; sourceTree = "<group>"; };
+		FEF63484236675FF005734E2 /* TransferCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferCellViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -417,6 +423,8 @@
 		FEF634722362CBE7005734E2 /* DemoHomework */ = {
 			isa = PBXGroup;
 			children = (
+				FEF6347F2362F869005734E2 /* Model */,
+				FEF6347E2362F85D005734E2 /* ViewModel */,
 				FEF634752362EC0F005734E2 /* Views */,
 				FEF634732362CC0F005734E2 /* HomeworkViewController.swift */,
 			);
@@ -432,6 +440,23 @@
 				FEF6347B2362EC46005734E2 /* TransferCell.xib */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		FEF6347E2362F85D005734E2 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				FEF63480236675CA005734E2 /* HomeworkViewModel.swift */,
+				FEF63482236675EF005734E2 /* InviteCellViewModel.swift */,
+				FEF63484236675FF005734E2 /* TransferCellViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		FEF6347F2362F869005734E2 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -636,12 +661,14 @@
 				FE15F8802356AF7300C9BB7E /* AlbumListCell.swift in Sources */,
 				FE6C4E5622DDBCEA00C8F2B1 /* DemoRequestType.swift in Sources */,
 				FE6C4E0722D3272300C8F2B1 /* ViewController.swift in Sources */,
+				FEF63483236675EF005734E2 /* InviteCellViewModel.swift in Sources */,
 				FE7082FB22EE87670018190B /* SQLiteColumnInserter.swift in Sources */,
 				FE6C4E5122DC7C3700C8F2B1 /* RequestTasks.swift in Sources */,
 				FE7082F022E7EF0D0018190B /* ResponseViewController.swift in Sources */,
 				FE6C4E5822DECC5100C8F2B1 /* CommunicatorResponse.swift in Sources */,
 				FEF634782362EC35005734E2 /* InviteCell.swift in Sources */,
 				FE6C4E5A22DECCA100C8F2B1 /* CommunicatorEnums.swift in Sources */,
+				FEF63485236675FF005734E2 /* TransferCellViewModel.swift in Sources */,
 				FE6C4E8E22E075C000C8F2B1 /* DetailCell.swift in Sources */,
 				FE6C4E4F22DC7B2E00C8F2B1 /* RequestBaseType.swift in Sources */,
 				FE6C4E3B22D48C2500C8F2B1 /* CameraController.swift in Sources */,
@@ -666,6 +693,7 @@
 				FEF6346D23604EE7005734E2 /* BaseCollectionViewFlowLayout.swift in Sources */,
 				FE7082F922EAE6190018190B /* SQLiteColumnCreater.swift in Sources */,
 				FE6C4E5322DDA46D00C8F2B1 /* HTTPStatusCodes.swift in Sources */,
+				FEF63481236675CA005734E2 /* HomeworkViewModel.swift in Sources */,
 				FE6C4E8322DF227000C8F2B1 /* Download.swift in Sources */,
 				FE6C4E8822E001FA00C8F2B1 /* DownloadMusic.swift in Sources */,
 				FE15F87B2355B47000C9BB7E /* DetailCellViewModel.swift in Sources */,

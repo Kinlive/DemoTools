@@ -399,13 +399,13 @@
                                 </constraints>
                             </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g9y-Sl-T4K">
-                                <rect key="frame" x="0.0" y="164" width="414" height="698"/>
+                                <rect key="frame" x="0.0" y="164" width="414" height="668"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vgQ-fJ-F8D" userLabel="baseView">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="698"/>
                                         <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="6G6-bQ-zsq">
-                                                <rect key="frame" x="30" y="0.0" width="354" height="668"/>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="6G6-bQ-zsq">
+                                                <rect key="frame" x="30" y="0.0" width="354" height="698"/>
                                                 <subviews>
                                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="qUw-LR-fv1">
                                                         <rect key="frame" x="0.0" y="0.0" width="354" height="200"/>
@@ -415,7 +415,7 @@
                                                         </constraints>
                                                     </tableView>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JoS-9T-rU2">
-                                                        <rect key="frame" x="0.0" y="220" width="354" height="100"/>
+                                                        <rect key="frame" x="0.0" y="200" width="354" height="100"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="好友列表 0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="meo-TX-M2C">
                                                                 <rect key="frame" x="10" y="17.5" width="84.5" height="20.5"/>
@@ -451,15 +451,19 @@
                                                         </constraints>
                                                     </view>
                                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="PBh-Fx-sfT">
-                                                        <rect key="frame" x="0.0" y="340" width="354" height="328"/>
+                                                        <rect key="frame" x="0.0" y="300" width="354" height="398"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="10" id="9Yk-rk-nma"/>
+                                                        </constraints>
                                                     </tableView>
                                                 </subviews>
                                             </stackView>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="6G6-bQ-zsq" secondAttribute="bottom" constant="30" id="Kaq-h9-IyT"/>
+                                            <constraint firstAttribute="bottom" secondItem="6G6-bQ-zsq" secondAttribute="bottom" id="Kaq-h9-IyT"/>
+                                            <constraint firstAttribute="height" constant="698" id="S6h-NK-aqm"/>
                                             <constraint firstItem="6G6-bQ-zsq" firstAttribute="top" secondItem="vgQ-fJ-F8D" secondAttribute="top" id="eda-a6-SAo"/>
                                             <constraint firstItem="6G6-bQ-zsq" firstAttribute="leading" secondItem="vgQ-fJ-F8D" secondAttribute="leading" constant="30" id="liz-rB-Sgy"/>
                                             <constraint firstAttribute="trailing" secondItem="6G6-bQ-zsq" secondAttribute="trailing" constant="30" id="zwM-SK-3WH"/>
@@ -467,12 +471,11 @@
                                     </view>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="vgQ-fJ-F8D" firstAttribute="centerY" secondItem="g9y-Sl-T4K" secondAttribute="centerY" id="5Db-W5-utY"/>
+                                    <constraint firstItem="vgQ-fJ-F8D" firstAttribute="bottom" secondItem="ZaA-fW-ECm" secondAttribute="bottom" id="6nH-c0-EzT"/>
                                     <constraint firstItem="vgQ-fJ-F8D" firstAttribute="top" secondItem="g9y-Sl-T4K" secondAttribute="top" id="LNh-kg-iK6"/>
                                     <constraint firstAttribute="trailing" secondItem="vgQ-fJ-F8D" secondAttribute="trailing" id="juh-bq-p6R"/>
                                     <constraint firstItem="vgQ-fJ-F8D" firstAttribute="leading" secondItem="g9y-Sl-T4K" secondAttribute="leading" id="lB3-Si-7oj"/>
                                     <constraint firstItem="vgQ-fJ-F8D" firstAttribute="centerX" secondItem="g9y-Sl-T4K" secondAttribute="centerX" id="lKr-Cc-MAZ"/>
-                                    <constraint firstAttribute="bottom" secondItem="vgQ-fJ-F8D" secondAttribute="bottom" id="pEE-VF-q36"/>
                                 </constraints>
                                 <viewLayoutGuide key="contentLayoutGuide" id="ZaA-fW-ECm"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="baH-G4-guO"/>
@@ -483,7 +486,7 @@
                             <constraint firstItem="g9y-Sl-T4K" firstAttribute="leading" secondItem="OAn-oo-Gws" secondAttribute="leading" id="0ux-fl-7jd"/>
                             <constraint firstItem="abf-mJ-B0i" firstAttribute="trailing" secondItem="OAn-oo-Gws" secondAttribute="trailing" id="Ka8-Ce-jZA"/>
                             <constraint firstItem="abf-mJ-B0i" firstAttribute="top" secondItem="OAn-oo-Gws" secondAttribute="top" id="UU7-Xu-Inf"/>
-                            <constraint firstItem="OAn-oo-Gws" firstAttribute="bottom" secondItem="g9y-Sl-T4K" secondAttribute="bottom" id="WVk-kH-9HW"/>
+                            <constraint firstItem="OAn-oo-Gws" firstAttribute="bottom" secondItem="g9y-Sl-T4K" secondAttribute="bottom" constant="30" id="WVk-kH-9HW"/>
                             <constraint firstItem="g9y-Sl-T4K" firstAttribute="trailing" secondItem="OAn-oo-Gws" secondAttribute="trailing" id="fFc-Y4-BgJ"/>
                             <constraint firstItem="abf-mJ-B0i" firstAttribute="leading" secondItem="OAn-oo-Gws" secondAttribute="leading" id="jaz-Ad-W5H"/>
                             <constraint firstItem="g9y-Sl-T4K" firstAttribute="top" secondItem="abf-mJ-B0i" secondAttribute="bottom" constant="20" id="nBN-VY-Byp"/>
@@ -492,6 +495,7 @@
                     </view>
                     <connections>
                         <outlet property="baseStackView" destination="6G6-bQ-zsq" id="wo7-UE-LJt"/>
+                        <outlet property="baseViewHeightConstraint" destination="S6h-NK-aqm" id="aDj-KK-uxk"/>
                         <outlet property="friendsCountLabel" destination="meo-TX-M2C" id="9j3-qO-eXD"/>
                         <outlet property="friendsSearchBar" destination="Ggw-bc-8on" id="RwN-wh-0vi"/>
                         <outlet property="inviteHeightConstraint" destination="GSh-MJ-r3R" id="hOv-Ao-anh"/>
@@ -499,6 +503,7 @@
                         <outlet property="listScrollView" destination="g9y-Sl-T4K" id="vnk-Pg-c5M"/>
                         <outlet property="searchBaseView" destination="JoS-9T-rU2" id="WMk-PZ-yw6"/>
                         <outlet property="topViewHeightConstraint" destination="5Mr-hM-g5A" id="f2g-v3-wq3"/>
+                        <outlet property="transferHeightConstraint" destination="9Yk-rk-nma" id="fM1-aD-WbX"/>
                         <outlet property="transferTableView" destination="PBh-Fx-sfT" id="uzh-Ez-8vG"/>
                     </connections>
                 </viewController>
