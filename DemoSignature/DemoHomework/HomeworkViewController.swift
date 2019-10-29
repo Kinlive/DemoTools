@@ -36,6 +36,9 @@ class HomeworkViewController: UIViewController {
     private var inviteFooterView: UIView!
     
     private var isCollapseInvites: Bool = true
+    private var previousYoffset: CGFloat = 0
+    // for searchBaseView move to scrollView frame layout guide use
+    private var searchBarMinY: CGFloat = 0
     
     lazy var viewModel: HomeworkViewModel = {
        return HomeworkViewModel(delegate: self)
@@ -53,6 +56,9 @@ class HomeworkViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         handleScrollViewContents(with: 1)
+        // on first entry give correct frame
+        searchBarMinY = inviteTableView.frame.maxY
+        
     }
     
     private func initViews() {
@@ -108,13 +114,14 @@ class HomeworkViewController: UIViewController {
         /* case 1
          因此例子用途為滾動到searchBar時要能置頂於上方，且能讓transferTableView繼續滾動，
          因此先取得 transferTableView扣除 search欄位高度後於畫面全部呈現的高度，以作為scrollView contentSize.height參考。
-         */
         let transfersHeight = listScrollView.frame.height - searchBaseView.frame.height
+        */
         
         /* case 2
         若是毋須將search置頂，則同inviteTableView計算model數量的高度直接賦予給
          scrollView.contentSize.height即可。
          */
+        let transfersHeight = cellHeight * 20
         
         // It's suggest that do not setup contentSize in the viewDidLoad override function.
         listScrollView.contentSize = CGSize(
@@ -127,7 +134,7 @@ class HomeworkViewController: UIViewController {
          另外需要注意的是 baseView 的bottom constraint在 storyboard上是對齊scrollView.Content Layout guide的bottom。
          */
         baseViewHeightConstraint.constant = listScrollView.contentSize.height
-    
+        
     }
     
     
@@ -176,18 +183,47 @@ class HomeworkViewController: UIViewController {
         }
         inviteTableView.endUpdates()
         
-        
+        // others parameters handle
+        // because tableView insert/delete by some time that here delay setting for get correct tableView's frame.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.searchBarMinY = self.inviteTableView.frame.maxY
+        }
         
     }
+    
+    private func baseSearchView(lockTop: Bool) {
+              
+        let frameLayout = listScrollView.frameLayoutGuide
+        
+        if lockTop {
+            baseStackView.removeArrangedSubview(searchBaseView)
+            searchBaseView.removeFromSuperview()
+            listScrollView.addSubview(searchBaseView)
+            searchBaseView.translatesAutoresizingMaskIntoConstraints = false
+            searchBaseView.topAnchor.constraint(equalTo: frameLayout.topAnchor).isActive = true
+            searchBaseView.centerXAnchor.constraint(equalTo: frameLayout.centerXAnchor).isActive = true
+            searchBaseView.widthAnchor.constraint(equalTo: frameLayout.widthAnchor).isActive = true
+            searchBaseView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+            searchBaseView.backgroundColor = UIColor.orange
+            
+        } else {
+            searchBaseView.removeFromSuperview()
+            searchBaseView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+            
+            baseStackView.insertArrangedSubview(searchBaseView, at: 1)
+            searchBaseView.backgroundColor = .white
+        }
+    }
+    
 }
 
 extension HomeworkViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
         let yOffset = scrollView.contentOffset.y
-        let searchBaseViewMinY = searchBaseView.frame.origin.y
+        //let searchBaseViewMinY = searchBaseView.frame.origin.y
         
-        if scrollView === self.listScrollView {
+        /*if scrollView === self.listScrollView {
             // 當base的scrollView位移高度超過搜尋的上緣時，切換scroll權給下方的tableView使其可滾動。
             // 特別注意的點， 若是僅設置 > searchBaseViewMinY，有可能下方判斷回滾的永遠無法觸發 <= 0而造成無法切換滾動權給 base scrollView
             if yOffset >= searchBaseViewMinY {
@@ -204,7 +240,21 @@ extension HomeworkViewController: UIScrollViewDelegate {
                 transferTableView.isScrollEnabled = false
             
             }
+        }*/
+        
+        /* case 2 以此作法 滾動時將searchBar移至上方，體驗較為順暢 */
+        let yDiff = yOffset - previousYoffset
+        let isScrollingUp = yDiff < 0
+        let isScrollingDown = yDiff > 0
+    
+        if isScrollingDown, yOffset >= searchBarMinY {
+            baseSearchView(lockTop: true)
+            
+        } else if isScrollingUp, yOffset < searchBarMinY - 2 {
+            baseSearchView(lockTop: false)
         }
+        
+        previousYoffset = yOffset
     }
 }
 
