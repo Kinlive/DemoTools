@@ -52,26 +52,26 @@ class SnapshotViewController: UIViewController {
     var insertsCount: Int = 1
     
     @IBAction func write(_ sender: UIButton) {
-//        sqlHelper.insert()
-//        let action = SQLiteAction.insert(tableName: "DemoTable", columnValue: [
-//                .text(column: "userName", value: "Kin\(insertsCount)"),
-//                .text(column: "phoneNumber", value: "091912345\(insertsCount)"),
-//                .real(column: "distance", value: Double(100 * insertsCount))
-//            ])
-//
-//        sqlHelper.insert(action: action) { result in
-//                switch result {
-//                case .success:
-//                    printLog(logs: [action.statementString], title: "Insert success")
-//                case .failure(let error):
-//                    printLog(logs: [error.message], title: "Insert failure")
-//                }
-//        }
-//
+        
+        let action = SQLiteAction.insert(tableName: "DemoTable", columnValue: [
+                .text(column: "userName", value: "Kin\(insertsCount)"),
+                .text(column: "phoneNumber", value: "091912345\(insertsCount)"),
+                .real(column: "distance", value: Double(100 * insertsCount))
+            ])
+
+        sqlHelper.insert(action: action) { result in
+                switch result {
+                case .success:
+                    printLog(logs: [action.statementString], title: "Insert success")
+                case .failure(let error):
+                    printLog(logs: [error.message], title: "Insert failure")
+                }
+        }
+
         insertsCount += 1
         
         ///
-        let teststring = SQLiteAction.select(columns: nil, fromTable: "DemoTable", wheres: [
+        /*let teststring = SQLiteAction.select(columns: nil, fromTable: "DemoTable", wheres: [
             // WHERE id = 1
 //            .wheres(column: "id", condition: .equal, beCompared: "1"),
             // AND userName LIKE '%Bo%'
@@ -82,7 +82,7 @@ class SnapshotViewController: UIViewController {
             .wheres(column: "id", condition: .greatOrEqual, beCompared: "0")
             ]).statementString
         
-        printLog(logs: [teststring], title: "TestSelect")
+        printLog(logs: [teststring], title: "TestSelect") */
 //        SQLiteOperators.orderBy(column: "==", arrange: .desc)
         ///
     }
@@ -101,11 +101,11 @@ class SnapshotViewController: UIViewController {
         sqlHelper.query()
     }
     @IBAction func queryAll(_ sender: UIButton) {
-        sqlHelper.queryAll()
+        sqlHelper.queryAll(action: .select(columns: nil, fromTable: "DemoTable", wheres: nil))
     }
     
     @IBAction func deleteRow(_ sender: UIButton) {
-        sqlHelper.delete()
+        sqlHelper.delete(action: .delete(fromTable: "DemoTable"))
     }
     
     @IBAction func toMVVMPracticePage(_ sender: Any) {

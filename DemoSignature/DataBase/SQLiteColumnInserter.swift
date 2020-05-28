@@ -123,7 +123,7 @@ enum SQLiteAction {
     case insert(tableName: String, columnValue: [SQLiteColumnInserter])
     case select(columns: [String]?, fromTable: String, wheres: [SQLiteConditions]?)
     case update
-    case delete
+    case delete(fromTable: String)
     
 }
 
@@ -202,9 +202,9 @@ extension SQLiteAction {
         case .update:
             
             return "UPDATE "
-        case .delete:
+        case .delete(let tableName):
             
-            return "DELETE FROM "
+            return "DELETE FROM \(tableName)"
         }
         
         stmtStr.append(";")

@@ -87,6 +87,7 @@ class SQLiteHelper {
         let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent(dbName)
         
         if sqlite3_open(path.path, &db) == SQLITE_OK {
+            printLog(logs: [path.path], title: "Open db on: ")
 //            completion(.success(nil)) // FIXME: - add SQLiteSuccess openDB
             return true
             
@@ -292,12 +293,12 @@ class SQLiteHelper {
         sqlite3_close(db)
     }
     
-    func queryAll() {
+    func queryAll(action: SQLiteAction) {
         guard openDatabase(), let db = db else { return }
         var queryStmt: OpaquePointer?
         
         // if need get all value from db.
-        if sqlite3_prepare_v2(db, queryStatementString, -1, &queryStmt, nil) == SQLITE_OK {
+        if sqlite3_prepare_v2(db, action.statementString, -1, &queryStmt, nil) == SQLITE_OK {
          
             while sqlite3_step(queryStmt) == SQLITE_ROW {
                 // The first column is an Int, so you use sqlite3_column_int() and pass in the statement and a zero-based column index.
@@ -341,11 +342,11 @@ class SQLiteHelper {
         sqlite3_close(db)
     }
     
-    func delete() {
+    func delete(action: SQLiteAction) {
         guard openDatabase(), let db = db else { return }
         
         var deleteStmt: OpaquePointer?
-        if sqlite3_prepare_v2(db, deleteStatementString, -1, &deleteStmt, nil) == SQLITE_OK {
+        if sqlite3_prepare_v2(db, action.statementString, -1, &deleteStmt, nil) == SQLITE_OK {
             
             if sqlite3_step(deleteStmt) == SQLITE_DONE {
                 print("Delete row successful")
